@@ -8,7 +8,6 @@
 
 
 <ins> Task Breakdown </ins> </br>
-
 **Nadia Ismail**: </br>
 **Shelby Osteen**: </br>
 **Hadiza Sarr**: </br>
