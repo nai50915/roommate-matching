@@ -5,6 +5,10 @@
 **Group Number**: #6 </br>
 **Project Goal**:  </br>
 
+</br>
+**Running Project on Unix-like Machine**: mvn spring-boot:run -Dspring-boot.run.jvmArguments='-Dserver.port=8081' 
+</br>
+
 
 
 <ins> Task Breakdown </ins> </br>
