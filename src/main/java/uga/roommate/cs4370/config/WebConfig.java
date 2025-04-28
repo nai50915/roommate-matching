@@ -3,14 +3,14 @@ Copyright (c) 2024 Sami Menik, PhD. All rights reserved.
 
 This is a project developed by Dr. Menik to give the students an opportunity to apply database concepts learned in the class in a real world project. Permission is granted to host a running version of this software and to use images or videos of this work solely for the purpose of demonstrating the work to potential employers. Any form of reproduction, distribution, or transmission of the software's source code, in part or whole, without the prior written consent of the copyright owner, is strictly prohibited.
 */
-package uga.menik.cs4370.config;
+package uga.roommate.cs4370.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import uga.menik.cs4370.components.AuthInterceptor;
+import uga.roommate.cs4370.components.AuthInterceptor;
 
 /**
  * This is a configuration class. See comments in AuthInterceptor.java
