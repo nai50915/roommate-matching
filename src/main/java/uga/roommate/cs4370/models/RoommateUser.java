@@ -1,0 +1,19 @@
+package uga.roommate.cs4370.models;
+
+/**
+ * Extends the User class to include a roommate status, 
+ * indicating whether the current session user is or has been roommates with this user
+ */
+public class RoommateUser extends User {
+    private final boolean isRoommate;
+
+    public RoommateUser (String userId, String username, String firstName, String lastName, String bio, String imagePath, boolean isRoommate) {
+        super(userId, username, firstName, lastName, bio, imagePath);
+        this.isRoommate = isRoommate;
+    }
+
+    public boolean isRoommate() {
+        return isRoommate;
+    }
+    
+}
