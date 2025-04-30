@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    {{> fragments/error_message}}
+    <div class="profile_nav">
+        <nav>
+            <ul>
+                <li><a class="active" href="#Profile">Profile</a></li>
+                <li><a href="#Matches">Matches</a></li>
+                <li><a href="#Feed">Feed</a></li>
+                <li><a href="#Review">Review</a></li>
+                <li><a href="#Find-Past-Roommate">Find Past Roommates</a></li>
+                <li><a href="#Your-Past-Roommate">Your Past Roommates</a></li>
+                <li style="float:right"><a href="#logOut">LogOut</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="profile">
+    <div class="profile_info">
+        <div class="profile_img"></div>
+        <div class="profile_content">
+            <div class="profile_owner">
+                <div class="profile_name">{{user.firstName}} {{user.lastName}}</div>
+                <div class="profile_rate">
+                    <h2>X/5</h2>
+                </div>
+            </div>
+            <div class="profile_desc">Hey! I’m a clean, respectful, and easygoing roommate who values a relaxed and friendly living environment. I’m good about paying bills on time, keeping shared spaces tidy, and giving others their space when needed. I love to cook, enjoy quiet evenings, and am always down for a good conversation or helping out around the apartment. If you’re looking for someone dependable and considerate, I’d be a great fit!</div>
+            <div class="profile_tags">Tags</div>
+        </div>
+    </div>
+    </div>
+    <div class="profile_divider">
+        <h1>Reviews for Name</h1>
+    </div>
+</body>
