@@ -41,7 +41,7 @@ public class RegistrationController {
     @PostMapping
     public String register (@RequestParam("username") String username,
             @RequestParam("password") String password, 
-            @RequestParam("passwordRepeat" String passwordRepeat,
+            @RequestParam("passwordRepeat") String passwordRepeat,
             @RequestParam("firstName") String firstName, 
             @RequestParam("lastName") String lastName) throws UnsupportedEncodingException) {
         System.out.println("To be implemented.");
