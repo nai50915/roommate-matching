@@ -36,7 +36,7 @@ public class MatchService {
      */
     public boolean isMatched() {
         System.out.println("To be implemented.");
-        return null;
+        return false;
     }
 
 }
