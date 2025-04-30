@@ -11,17 +11,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * This is a service class enabling downvote-related functions.
+ * This is a service class enabling vote-related functions.
  * This class interacts with the database through a dataSource instance.
  */
 @Service
-public class DownvoteService {
+public class VoteService {
   private final DataSource dataSource;
 
   @Autowired
-  public DownvoteService (DataSource dataSource) {
+  public VoteService (DataSource dataSource) {
     this.dataSource = dataSource;
   }
+
+  /**
+   * Upvotes a post 
+   * @throws SQLException
+   */
+  public void upvotePost () throws SQLException {
+    System.out.println("To be implemented.");
+  }
+
 
   /**
    * Downvotes a post 
@@ -32,11 +41,32 @@ public class DownvoteService {
   }
 
   /**
-   * Removes a user's downvote for a post 
+   * Removes a user's vote for a post 
    * @throws SQLException
    */
-  public void removeDownvote () throws SQLException {
+  public void removeVote () throws SQLException {
     System.out.println("To be implemented.");
+  }
+
+  /**
+   * Checks if a user has voted on a post 
+   * @return
+   * @throws SQLException
+   */
+  public boolean hasVoted () throws SQLException {
+    System.out.println("To be implemented.");
+    return false;
+  }
+
+
+  /**
+   * Checks if a user has upvoted a post 
+   * @return
+   * @throws SQLException
+   */
+  public boolean isUpvoted () throws SQLException {
+    System.out.println("To be implemented.");
+    return false;
   }
 
   /**
@@ -48,6 +78,17 @@ public class DownvoteService {
     System.out.println("To be implemented.");
     return false;
   }
+
+  /**
+   * Counts all the upvotes for a given post
+   * @return
+   * @throws SQLException
+   */
+  public int countUpvotes () throws SQLException {
+    System.out.println("To be implemented.");
+    return -1;
+  }
+
 
   /**
    * Counts all the downvotes for a given post
