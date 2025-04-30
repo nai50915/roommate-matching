@@ -1,16 +1,20 @@
 package uga.roommate.cs4370.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Review {
   private final String reviewId;
-  private final String content;
   private final User reviewer;
   private final User reviewee; 
+  private final String content;
   private final String reviewDate;
   private final int upvoteCount;
   private final int downvoteCount;
   private final int rating;
+  private final List<String> tags;
 
-  public Review (String reviewId, String content, User reviewer, User reviewee, String reviewDate, int upvoteCount, int downvoteCount, int rating) {
+  public Review (String reviewId, String content, User reviewer, User reviewee, String reviewDate, int upvoteCount, int downvoteCount, int rating, ArrayList<String> tags) {
     this.reviewId = reviewId;
     this.content = content;
     this.reviewer = reviewer;
@@ -19,6 +23,7 @@ public class Review {
     this.upvoteCount = upvoteCount;
     this.downvoteCount = downvoteCount; 
     this.rating = rating;
+    this.tags = tags;
   }
 
   public String getReviewId() {
@@ -52,4 +57,9 @@ public class Review {
   public int getRating() {
     return rating;
   }
+
+  public List<String> getTags() {
+    return tags;
+  }
+
 }

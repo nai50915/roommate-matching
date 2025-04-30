@@ -14,38 +14,74 @@ import org.springframework.web.servlet.ModelAndView;
 
 import uga.roommate.cs4370.services.UserService;
 
-/**
- * Handles /login URL
- */
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+
+    // UserService has user login and registration related functions.
     private final UserService userService;
 
+    /**
+     * See notes in AuthInterceptor.java regarding how this works 
+     * through dependency injection and inversion of control.
+     */
     @Autowired
-    public LoginController (UserService userService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
     }
 
     /**
-     * Serves login page at /login URL 
+     * This handles serving the login page at /login URL.
+     * 
+     * Note that this accepts a URL parameter called error.
+     * The value to this parameter can be shown to the user as an error message.
+     * See notes in HashtagSearchController.java regarding URL parameters.
      */
     @GetMapping
     public ModelAndView webpage(@RequestParam(name = "error", required = false) String error) {
+        // See notes on ModelAndView in BookmarksController.java.
         ModelAndView mv = new ModelAndView("login_page");
-        userService.unAuthenticate(); // Logout if user is already logged in
+
+        // Log out if the user is already logged in.
+        userService.unAuthenticate();
+
+        // If an error occured, you can set the following property with the
+        // error message to show the error message to the user.
         mv.addObject("errorMessage", error);
+
         return mv;
     }
 
     /**
-     * Handle /login form submissions
+     * This handles the /login form submission.
+     * See notes in HomeController.java regardig /createpost form submission handler.
      */
-    @GetMapping
-    public String login(@RequestParam("username") String username, 
+    @PostMapping
+    public String login(@RequestParam("username") String username,
             @RequestParam("password") String password) {
-        System.out.println("To be implemented.");
-        return null; 
+        boolean isAuthenticated = false;
+
+        try {
+            isAuthenticated = userService.authenticate(username, password);
+        } catch (SQLException e) {
+            // Redirect back to the login page with an error message if authentication
+            // fails.
+            String message = URLEncoder.encode("Authentication failed. Please try again.",
+                    StandardCharsets.UTF_8);
+            return "redirect:/login?error=" + message;
+        }
+
+        if (isAuthenticated) {
+            // Redirect to home page if authentication is successful.
+            return "redirect:/profile";
+        } else {
+            // Redirect back to the login page with an error message if authentication
+            // fails.
+            String message = URLEncoder.encode("Invalid username or password. Please try again.",
+                    StandardCharsets.UTF_8);
+            return "redirect:/login?error=" + message;
+        }
     }
-    
+
 }
+

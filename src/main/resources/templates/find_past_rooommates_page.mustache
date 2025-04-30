@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find-Past-Roommate</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="fpr_nav">
+        <nav>
+            <ul>
+                <li><a  href="#Profile">Profile</a></li>
+                <li><a href="#Matches">Matches</a></li>
+                <li><a href="#Feed">Feed</a></li>
+                <li><a href="#Review">Review</a></li>
+                <li><a class="active" href="#Find-Past-Roommate">Find Past Roommates</a></li>
+                <li><a href="#Your-Past-Roommate">Your Past Roommates</a></li>
+                <li style="float:right"><a href="#logOut">LogOut</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="fpr_header">
+        <h1>Find Past Roomates</h1>
+    </div>
+    <div class="add_roommate_cont">
+        {{> fragments/add_past_rm}}
+    </div>
+</body>

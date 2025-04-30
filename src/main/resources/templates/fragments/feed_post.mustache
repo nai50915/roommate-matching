@@ -1,0 +1,26 @@
+ <div class="feed_info">
+            <div class="feed_imgs">
+                <div class="feed_img"></div>
+                <div class="feed_img"></div>
+            </div>
+            <div class="feed_content">
+                <div class="feed_name">Roommate for Roommate</div>
+                <div class="feed_desc">Roomate comment</div>
+            </div>
+            <div class="feed_interaction">
+
+                <form method="POST" action="/like" class="interaction_form">
+                    <input type="hidden" name="feed_id" value="123"> <!-- feed ID -->
+                    <button type="submit" class="feed_likes"></button>
+                </form>
+
+                <div>count</div>
+                <div>count</div>
+                  
+                <form method="POST" action="/dislike" class="interaction_form">
+                    <input type="hidden" name="feed_id" value="123"> <!-- feed ID -->
+                    <button type="submit" class="feed_dislikes"></button>
+                </form>
+
+            </div>
+        </div>
