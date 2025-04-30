@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="review_nav">
+        <nav>
+            <ul>
+                <li><a href="#Profile">Profile</a></li>
+                <li><a href="#Matches">Matches</a></li>
+                <li><a href="#Feed">Feed</a></li>
+                <li><a class="active" href="#Review">Review</a></li>
+                <li><a href="#Find-Past-Roommate">Find Past Roommates</a></li>
+                <li><a href="#Your-Past-Roommate">Your Past Roommates</a></li>
+                <li style="float:right"><a href="#logOut">LogOut</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class ="review_header">
+        <h1>Review a Roomate</h1>
+    </div>
+    <div class="rating-container">
+        <form id="rating-form" method="POST" action="/submit-rating">
+
+    <div class="select_person">
+        <label for="person" class="select_person_header">Select Person</label>
+        <select name="person_select" id="person_select">
+            <option value="1">User1</option>
+            <option value="2">User2</option>
+            <option value="3">User3</option>
+            <option value="4">User4</option>
+            <option value="5">User5</option>
+        </select>
+    </div>
+
+    <div class="star_rating">
+          <label for="rating" class="rating_header">Select Rating:</label>
+          <select name="rating" id="rating">
+            <option value="1">⭐</option>
+            <option value="2">⭐⭐</option>
+            <option value="3">⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐</option>
+            <option value="5">⭐⭐⭐⭐⭐</option>
+          </select>
+    </div>
+
+    <div class="review_tags">
+        <label class="tag">
+          <input type="checkbox" name="tags" value="tag1">
+          tag1
+        </label>
+        <label class="tag">
+          <input type="checkbox" name="tags" value="tag2">
+          tag2
+        </label>
+        <label class="tag">
+          <input type="checkbox" name="tags" value="tag3">
+          tag3
+        </label>
+        <label class="tag">
+            <input type="checkbox" name="tags" value="tag3">
+            tag3
+        </label>
+        <label class="tag">
+            <input type="checkbox" name="tags" value="tag3">
+            tag3
+        </label>
+        <label class="tag">
+            <input type="checkbox" name="tags" value="tag3">
+            tag3
+        </label>
+    </div>  
+
+
+    <div class="written-review">
+        <label for="review">Write your review:</label><br>
+        <textarea id="review" name="review" rows="5" cols="50" required></textarea>
+    </div>
+    
+ 
+    <div class="submit-container">
+        <button type="submit">Submit Review</button>
+    </div>
+    </form>
+    </div>
+</body>
+</html>
