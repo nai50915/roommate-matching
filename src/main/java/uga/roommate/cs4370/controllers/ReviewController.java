@@ -18,14 +18,14 @@ import uga.roommate.cs4370.services.ReviewService;
  * Handles /review URL
  */
 @Controller
-@GetMapping("/review")
+@RequestMapping("/review")
 public class ReviewController {
-    private final ReviewService reviewService;
+    /* private final ReviewService reviewService;
 
     @Autowired
     public ReviewController (ReviewService reviewService) {
         this.reviewService = reviewService;
-    }
+    } */
 
     /**
      * Serves /review page

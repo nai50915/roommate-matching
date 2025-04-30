@@ -1,5 +1,11 @@
 package uga.roommate.cs4370.controllers;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +32,7 @@ public class HomeController {
      * Handles root URL 
      */
     @GetMapping
-    public ModelAndView webpage(@RequestMapping(name = "error", required = false) String error) {
+    public ModelAndView webpage(@RequestParam(name = "error", required = false) String error) {
         ModelAndView mv = new ModelAndView("home_page");
         mv.addObject("errorMessage", error);
         return mv;
