@@ -19,15 +19,24 @@ public class MatchService {
     private final DataSource dataSource; 
 
     @Autowired
-    public MatchService (DataSource dataSource) {
+    public MatchService(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
     /**
      * Establish a match between two users 
      */
-    public void matchUser () {
+    public void matchUser() {
         System.out.println("To be implemented.");
+    }
+    
+    /**
+     * Check if two users are matched
+     * @return true if matched, false otherwise
+     */
+    public boolean isMatched() {
+        System.out.println("To be implemented.");
+        return null;
     }
 
 }
