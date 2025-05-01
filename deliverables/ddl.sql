@@ -74,6 +74,7 @@ create table if not exists matches (
 	userB int not null, 
 	tags_match int,
 	primary key (userA, userB),
+	check (userA < userB), 
 	foreign key (userA) references user(userId) on delete cascade, 
 	foreign key (userB) references user(userId) on delete cascade
 );
@@ -83,6 +84,7 @@ create table if not exists pastRoommate (
 	userA int not null,
 	userB int not null,
 	primary key (userA, userB),
+	check (userA < userB), 
 	foreign key (userA) references user(userId) on delete cascade, 
 	foreign key (userB) references user(userId) on delete cascade
 ); 
