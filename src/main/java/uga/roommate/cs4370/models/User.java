@@ -27,6 +27,17 @@ public class User {
     tags = new ArrayList<>();
   }
 
+  // Temporary constructor 
+  public User (String userId, String firstName, String lastName) {
+    this.userId = userId;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.username = "";
+    this.bio = "";
+    this.imagePath = "";
+    tags = new ArrayList<>();
+  }
+
   public String getUserId() {
     return userId;
   }

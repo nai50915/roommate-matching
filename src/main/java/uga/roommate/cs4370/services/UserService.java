@@ -71,7 +71,7 @@ public class UserService {
                         String lastName = rs.getString("lastName");
 
                         // Initialize and retain the logged in user.
-                        // loggedInUser = new User(userId, firstName, lastName);
+                        loggedInUser = new User(userId, firstName, lastName);
                     }
                     return isPassMatch;
                 }
