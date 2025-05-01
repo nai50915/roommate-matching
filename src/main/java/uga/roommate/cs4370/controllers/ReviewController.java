@@ -34,6 +34,7 @@ public class ReviewController {
     public ModelAndView webpage (@RequestParam(name = "error", required = false) String error) {
         ModelAndView mv = new ModelAndView("review_page");
         mv.addObject("errorMessage", error);
+        System.out.println("Going to review page...");
         return mv;
     }
 

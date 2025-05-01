@@ -42,7 +42,6 @@ public class ProfileController {
 
     // Optional error message
     mv.addObject("errorMessage", error);
-
     return mv;
     }
 

@@ -35,6 +35,7 @@ public class HomeController {
     public ModelAndView webpage(@RequestParam(name = "error", required = false) String error) {
         ModelAndView mv = new ModelAndView("home_page");
         mv.addObject("errorMessage", error);
+        System.out.println("Going to home page...");
         return mv;
     }
 }

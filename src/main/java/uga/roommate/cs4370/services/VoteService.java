@@ -34,7 +34,20 @@ public class VoteService {
     before inserting into the vote table, check if the user previously
     downvoted that post. if so, delete that (call removevote) then insert the upvote 
      */
-    System.out.println("To be implemented.");
+    String hasVoted = hasVoted(userId, reviewId);
+    if (hasVoted.equals("downvote")) {
+      removeVote(userId, reviewId);
+    } else if (hasVoted.equals("upvote")) {
+      return;
+    }
+    String sql = "INSERT INTO vote (userId, postId, type) VALUES (?, ?, 'upvote')";
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+          ps.setString(1, userId);
+          ps.setString(2, reviewId);
+          ps.executeUpdate();
+    }
+    System.out.println("To be tested.");
   }
 
 
@@ -42,12 +55,25 @@ public class VoteService {
    * Downvotes a post 
    * @throws SQLException
    */
-  public void downvotePost () throws SQLException {
+  public void downvotePost(String userId, String reviewId) throws SQLException {
+    String hasVoted = hasVoted(userId, reviewId);
     /*
     before inserting into the vote table, check if the user previously
     upvoted that post. if so, delete that (call removevote) then insert the downvote 
-     */
-    System.out.println("To be implemented.");
+    */
+    if (hasVoted.equals("upvote")) {
+      removeVote(userId, reviewId);
+    } else if (hasVoted.equals("downvote")) {
+      return;
+    }
+    String sql = "INSERT INTO vote (userId, postId, type) VALUES (?, ?, 'downvote')";
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+          ps.setString(1, userId);
+          ps.setString(2, reviewId);
+          ps.executeUpdate();
+    }
+    System.out.println("To be tested.");
   }
 
   /**
@@ -88,6 +114,46 @@ public class VoteService {
     return "no-vote";
   }
 
+  /**
+   * Counts all the upvotes for a given post
+   * @return
+   * @throws SQLException
+   */
+  public int countUpvotes(String reviewId) throws SQLException {
+    String sql = "SELECT COUNT(*) FROM vote WHERE reviewId = ? and type = 'upvote'";
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+          ps.setString(1, reviewId);
+          try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+              return rs.getInt(1);
+            }
+          }
+    }
+    System.out.println("To be tested.");
+    return 0;
+  }
+
+  /**
+   * Counts all the downvotes for a given post
+   * @return
+   * @throws SQLException
+   */
+  public int countDownvotes(String reviewId) throws SQLException {
+    String sql = "SELECT COUNT(*) FROM vote WHERE reviewId = ? and type = 'downvote'";
+    try (Connection conn = dataSource.getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
+          ps.setString(1, reviewId);
+          try (ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+              return rs.getInt(1);
+            }
+          }
+    }
+    System.out.println("To be tested.");
+    return 0;
+  }
+
 /* PROBABLY NOT NEEDED -- REDUNDANT
   
    * Checks if a user has upvoted a post 
@@ -109,45 +175,5 @@ public class VoteService {
     return false;
   }
 */ 
-  /**
-   * Counts all the upvotes for a given post
-   * @return
-   * @throws SQLException
-   */
-  public int countUpvotes(String reviewId) throws SQLException {
-    String sql = "SELECT COUNT(*) FROM vote WHERE reviewId = ? and type = 'upvote'";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-          ps.setString(1, reviewId);
-          try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-              return rs.getInt(1);
-            }
-          }
-    }
-    System.out.println("To be tested.");
-    return 0;
-  }
-
-
-  /**
-   * Counts all the downvotes for a given post
-   * @return
-   * @throws SQLException
-   */
-  public int countDownvotes(String reviewId) throws SQLException {
-    String sql = "SELECT COUNT(*) FROM vote WHERE reviewId = ? and type = 'downvote'";
-    try (Connection conn = dataSource.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
-          ps.setString(1, reviewId);
-          try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-              return rs.getInt(1);
-            }
-          }
-    }
-    System.out.println("To be tested.");
-    return 0;
-  }
 
 }
