@@ -38,9 +38,8 @@ public class RoommateService {
     }
 
     /**
-     * Finds all current and past roommates for a user
+     * Finds if users were or are roommates
      */
-
     public void isRoommate () {
         System.out.println("To be implemented.");
     }

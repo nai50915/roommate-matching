@@ -5,6 +5,7 @@
 **Group Number**: #6 </br>
 **Project Goal**:  </br>
 
+Before running, ensure you are in the finalproj directory. 
 **Running Project on Unix-like Machine**: mvn spring-boot:run -Dspring-boot.run.jvmArguments='-Dserver.port=8081' 
 
 
