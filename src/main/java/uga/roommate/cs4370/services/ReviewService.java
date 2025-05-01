@@ -36,7 +36,16 @@ public class ReviewService {
         return null;
     }
 
+    /**
+     * Retrieve all reviews from the database
+     * @return reviews A list of all the reviews 
+     */
     public List<Review> getAllReviews() {
+        List<Review> reviews = new ArrayList<>();
+        /*
+        for this, we need to make sure we account for the loggedInUser to see if
+        they have voted on a review 
+        */
         System.out.println("To be implemented.");
         return null;
     }

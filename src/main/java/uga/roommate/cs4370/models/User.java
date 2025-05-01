@@ -33,9 +33,15 @@ public class User {
     this.firstName = firstName;
     this.lastName = lastName;
     this.username = "";
-    this.bio = "";
-    this.imagePath = "";
+    this.bio = "Hi! I just joined Rate my Roommate";
+    this.imagePath = getAvatarPath(userId);
     tags = new ArrayList<>();
+  }
+
+  private static String getAvatarPath(String userId) {
+    int fileNo = (userId.hashCode() % 20) + 1;
+    String avatarFileName = String.format("avatar_%d.png", fileNo);
+    return "/avatars/" + avatarFileName;
   }
 
   public String getUserId() {
