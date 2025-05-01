@@ -69,7 +69,7 @@ create table if not exists userTag (
 );
 
 -- Create the match table
-create table if not exists `match` (
+create table if not exists matches (
 	userA int not null, 
 	userB int not null, 
 	tags_match int,
