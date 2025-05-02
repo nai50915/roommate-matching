@@ -107,10 +107,10 @@ public class UserService {
      * a SQLException is thrown due to the unique constraint violation, which should
      * be handled by the caller.
      */
-    public boolean registerUser(String username, String password, String firstName, String lastName)
+    public boolean registerUser(String username, String password, String firstName, String lastName, String description, String imageUrl)
             throws SQLException {
         // Note the ? marks in the SQL statement. They are placeholders like mentioned above.
-        final String registerSql = "insert into user (username, password, firstName, lastName) values (?, ?, ?, ?)";
+        final String registerSql = "insert into user (username, password, firstName, lastName, description, imageUrl) values (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement registerStmt = conn.prepareStatement(registerSql)) {
@@ -119,6 +119,8 @@ public class UserService {
             registerStmt.setString(2, passwordEncoder.encode(password));
             registerStmt.setString(3, firstName);
             registerStmt.setString(4, lastName);
+            registerStmt.setString(5, description);
+            registerStmt.setString(6, imageUrl);
 
             // Execute the statement and check if rows are affected.
             int rowsAffected = registerStmt.executeUpdate();

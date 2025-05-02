@@ -46,10 +46,10 @@ public class ProfileService {
                         String username = rs.getString("username");
                         String firstName = rs.getString("firstName");
                         String lastName = rs.getString("lastName");
-                        // String bio = rs.getString("description");
+                        String bio = rs.getString("description");
                         String imagePath = rs.getString("imageUrl");
                         List<String> tags = getTags(userId);
-                        User user = new User(userId, username, firstName, lastName, "bio", imagePath, tags);
+                        User user = new User(userId, username, firstName, lastName, bio, imagePath, tags);
                         return user;
                     }
            }

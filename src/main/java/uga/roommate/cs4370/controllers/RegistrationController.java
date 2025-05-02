@@ -58,7 +58,9 @@ public class RegistrationController {
             @RequestParam("password") String password,
             @RequestParam("passwordRepeat") String passwordRepeat,
             @RequestParam("firstName") String firstName,
-            @RequestParam("lastName") String lastName) throws UnsupportedEncodingException {
+            @RequestParam("lastName") String lastName,
+            @RequestParam("description") String description,
+            @RequestParam("imageUrl") String imageUrl) throws UnsupportedEncodingException {
         // Passwords should have at least 3 chars.
         if (password.trim().length() < 3) {
             // If the password is too short redirect to the registration page
@@ -76,7 +78,7 @@ public class RegistrationController {
 
         try {
             boolean registrationSuccess = userService.registerUser(username,
-                    password, firstName, lastName);
+                    password, firstName, lastName, description, imageUrl);
             if (registrationSuccess) {
                 // If the registration worked redirect to the login page.
                 return "redirect:/login";
