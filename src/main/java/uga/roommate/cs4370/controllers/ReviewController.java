@@ -18,7 +18,7 @@ import uga.roommate.cs4370.services.ReviewService;
  * Handles /review URL
  */
 @Controller
-@RequestMapping("/review")
+@RequestMapping("/Review")
 public class ReviewController {
     /* private final ReviewService reviewService;
 
