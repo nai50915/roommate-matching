@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import uga.roommate.cs4370.services.UserService;
+import uga.roommate.cs4370.services.ProfileService;
 import uga.roommate.cs4370.models.User;
 
 @Controller
@@ -21,29 +23,37 @@ public class ProfileController {
 
    // UserService has user login and registration related functions.
    private final UserService userService;
+   private final ProfileService profileService;
 
    /**
     * See notes in AuthInterceptor.java regarding how this works 
     * through dependency injection and inversion of control.
     */
    @Autowired
-   public ProfileController(UserService userService) {
+   public ProfileController(UserService userService, ProfileService profileService) {
        this.userService = userService;
+       this.profileService = profileService;
    }
 
-    @GetMapping
-    public ModelAndView profilePage(@RequestParam(name = "error", required = false) String error) {
-    ModelAndView mv = new ModelAndView("profile_page");
+   @GetMapping
+    public ModelAndView profileOfLoggedInUser() throws SQLException {
+        System.out.println("User is attempting to view profile of the logged in user.");
+        return profileOfSpecificUser(userService.getLoggedInUser().getUserId());
+   }
 
-    User loggedInUser = userService.getLoggedInUser(); // Replace this with real service call
+    @GetMapping("/{userId}")
+    public ModelAndView profileOfSpecificUser(@PathVariable("userId") String userId) throws SQLException {
+        System.out.println("User is attempting to view profile: " + userId);
+        ModelAndView mv = new ModelAndView("profile_page");
 
-    // Add user object to the model
-    mv.addObject("user", loggedInUser);
+        User user = profileService.getUser(userId); // Replace this with real service call
 
-    // Optional error message
-    mv.addObject("errorMessage", error);
+        // Add user object to the model
+        mv.addObject("user", user);
 
-    return mv;
+        // Optional error message
+        // mv.addObject("errorMessage", error);
+        return mv;
     }
 
 }
