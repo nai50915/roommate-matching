@@ -45,4 +45,9 @@
     <div class="profile_divider">
         <h1>Reviews for {{user.firstName}}</h1>
     </div>
+    <div class="profile_reviews"> 
+        {{#reviews}}
+            {{> fragments/profile_review}}
+        {{/reviews}}
+    </div>
 </body>
