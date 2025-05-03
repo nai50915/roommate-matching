@@ -17,7 +17,7 @@
                 <li><a href="/Review">Review</a></li>
                 <li><a href="/Find-Past-Roommate">Find Past Roommates</a></li>
                 <li><a href="/Your-Past-Roommate">Your Past Roommates</a></li>
-                <li style="float:right"><a href="/login">LogOut</a></li>
+                <li style="float:right"><a href="/login#logOut">LogOut</a></li>
             </ul>
         </nav>
     </div>
@@ -34,6 +34,25 @@
                 </div>
             </div>
             <div class="profile_desc">{{user.bio}}</div>
+            <div class="profile_attrs">
+            <strong>{{user.firstName}}'s Attributes:</strong>
+    <div class="attr-chip-container">
+        {{#user.attributes}}
+            <span class="attr-chip">{{.}}</span>
+        {{/user.attributes}}
+        {{^user.attributes}}
+            <span>No attributes listed</span>
+        {{/user.attributes}}
+    </div>
+
+    {{#isOwnProfile}}
+    <div class="profile_actions">
+        <a href="/profile/attributes" class="action-button">Edit Attributes</a>
+    </div>
+    {{/isOwnProfile}}
+</div>
+
+            <div class="profile_tags">Tags</div>
             <div class="profile_tags">
                 {{#tags}}
                     {{> fragments/profile_tag}}

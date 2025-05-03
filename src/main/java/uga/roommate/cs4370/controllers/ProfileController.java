@@ -16,33 +16,39 @@ import org.springframework.web.servlet.ModelAndView;
 
 import uga.roommate.cs4370.services.UserService;
 import uga.roommate.cs4370.services.ProfileService;
+import uga.roommate.cs4370.services.AttributeService;
 import uga.roommate.cs4370.models.User;
-import uga.roommate.cs4370.models.Rate;
-import uga.roommate.cs4370.models.ProfileReview;
+import uga.roommate.cs4370.models.Attribute;
 
 @Controller
-@RequestMapping("/Profile")
+@RequestMapping("/profile")
 public class ProfileController {
 
-   // UserService has user login and registration related functions.
-   private final UserService userService;
-   private final ProfileService profileService;
+    // UserService has user login and registration related functions.
+    private final UserService userService;
+    private final ProfileService profileService;
+    private final AttributeService attributeService;
 
-   /**
-    * See notes in AuthInterceptor.java regarding how this works 
-    * through dependency injection and inversion of control.
-    */
-   @Autowired
-   public ProfileController(UserService userService, ProfileService profileService) {
-       this.userService = userService;
-       this.profileService = profileService;
-   }
+    /**
+     * See notes in AuthInterceptor.java regarding how this works
+     * through dependency injection and inversion of control.
+     */
+    @Autowired
+    public ProfileController(UserService userService, ProfileService profileService,
+            AttributeService attributeService) {
+        this.userService = userService;
+        this.profileService = profileService;
+        this.attributeService = attributeService;
+    }
 
-   @GetMapping
+    @GetMapping
     public ModelAndView profileOfLoggedInUser() throws SQLException {
         System.out.println("User is attempting to view profile of the logged in user.");
-        return profileOfSpecificUser(userService.getLoggedInUser().getUserId());
-   }
+        String userId = userService.getLoggedInUser().getUserId();
+        ModelAndView mv = profileOfSpecificUser(userId);
+        mv.addObject("isOwnProfile", true);
+        return mv;
+    }
 
     @GetMapping("/{userId}")
     public ModelAndView profileOfSpecificUser(@PathVariable("userId") String userId) throws SQLException {
@@ -50,20 +56,36 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView("profile_page");
 
         User user = profileService.getUser(userId); // Replace this with real service call
-        double rating = profileService.getRating(userId);
-        Rate profileRating = new Rate(rating);
-        List<String> tags = profileService.getTags(userId);
-        List<ProfileReview> reviews = profileService.getReviews(userId);
-        
+
         // Add user object to the model
-        mv.addObject("tags", tags);
         mv.addObject("user", user);
-        mv.addObject("rate", profileRating);
-        mv.addObject("reviews", reviews);
 
         // Optional error message
         // mv.addObject("errorMessage", error);
+        boolean isOwn = userService.getLoggedInUser().getUserId().equals(userId);
+        mv.addObject("isOwnProfile", isOwn);
         return mv;
+    }
+
+    @GetMapping("/attributes")
+    public ModelAndView showAttributeEditor() throws SQLException {
+        String userId = userService.getLoggedInUser().getUserId();
+        List<Attribute> allAttrs = attributeService.getAllAttributesWithSelection(userId);
+        List<Integer> selected = attributeService.getUserAttributeIds(userId);
+        User user = profileService.getUser(userId);
+
+        ModelAndView mv = new ModelAndView("edit_attributes");
+        mv.addObject("allAttributes", allAttrs);
+        mv.addObject("selectedAttributeIds", selected);
+        mv.addObject("user", user);
+        return mv;
+    }
+
+    @PostMapping("/attributes")
+    public String updateAttributes(@RequestParam("attributes") List<Integer> attributes) throws SQLException {
+        String userId = userService.getLoggedInUser().getUserId();
+        attributeService.updateUserAttributes(userId, attributes);
+        return "redirect:/profile";
     }
 
 }
