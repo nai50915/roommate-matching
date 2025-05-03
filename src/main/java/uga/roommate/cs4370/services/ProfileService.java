@@ -11,12 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
 
 import uga.roommate.cs4370.models.Review;
 import uga.roommate.cs4370.models.User;
-import uga.roommate.cs4370.models.ProfileReview;
 
 /**
  * This is a service class to assist in building the profile page.
@@ -37,7 +35,7 @@ public class ProfileService {
      * @param userId
      * @return
      */
-    public User getUser(String userId) throws SQLException {
+    public User getUser(String userId) {
         System.out.println("GETUSER: To be tested.");
         String sql = "SELECT username, firstName, lastName, description, imageUrl FROM user WHERE userId = ?";
         try (Connection conn = dataSource.getConnection();
@@ -55,6 +53,8 @@ public class ProfileService {
                         return user;
                     }
            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         /*
         We have the user's userId. we use this to get the 
@@ -65,19 +65,6 @@ public class ProfileService {
         return null;
     }
 
-    private static final Map<String, String> TAG_MAP = Map.of(
-    "Clean", "Clean",
-    "Messy", "Messy",
-    "EB", "Early Bird",
-    "NO", "Night Owl",
-    "LS", "Light Sleeper",
-    "Smoker", "Smoker",
-    "Drinker", "Drinker",
-    "Pets", "Pets",
-    "NP", "No Pets"
-    );
-
-
     /**
      * Retrieves the tags for a user 
      * 
@@ -85,7 +72,7 @@ public class ProfileService {
      * @return tags 
      * @throws SQLException
      */
-    public List<String> getTags(String userId) throws SQLException {
+    public List<String> getTags(String userId) {
         System.out.println("GETTAGS: To be tested.");
         List<String> tags = new ArrayList<>();
         String sql = "SELECT DISTINCT t.tagName " + 
@@ -98,10 +85,11 @@ public class ProfileService {
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         String tag = rs.getString("tagName");
-                        String tagFull = TAG_MAP.getOrDefault(tag, tag);
-                        tags.add(tagFull);
+                        tags.add(tag);
                     }
                 }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         if (tags.isEmpty()) {
@@ -138,45 +126,18 @@ public class ProfileService {
      * Retrieve the reviews for a user 
      * @return
      */
-    public List<ProfileReview> getReviews(String userId) throws SQLException {
-        System.out.println("GETREVIEW: To be tested.");
-        List<ProfileReview> reviews = new ArrayList<>();
-    
-        String sql = "SELECT r.reviewId AS reviewId, " +
-                     "ee.firstName AS revieweeFirstName, " +
-                     "er.firstName AS reviewerFirstName, " +
-                     "er.imageUrl AS reviewerImg, " +
-                     "r.content AS content " +
-                     "FROM review r " +
-                     "JOIN user er ON r.reviewerId = er.userId " +
-                     "JOIN user ee ON r.revieweeId = ee.userId " +
-                     "WHERE r.revieweeId = ? " +
-                     "ORDER BY r.createdAt DESC";
-    
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, userId);
-    
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    String reviewId = rs.getString("reviewId");
-                    String revieweeFirstName = rs.getString("revieweeFirstName");
-                    String reviewerFirstName = rs.getString("reviewerFirstName");
-                    String reviewerImg = rs.getString("reviewerImg");
-                    String content = rs.getString("content");
-    
-                    ProfileReview review = new ProfileReview(
-                        reviewId, revieweeFirstName, reviewerFirstName, reviewerImg, content
-                    );
-                    reviews.add(review);
-                }
-            }
-        }
-    
-        System.out.println(reviews);
-        return reviews;
+    private List<Review> getReviews (String userId) {
+        /*
+        we have the user's userId. we use this to find all the 
+        reviews written about them. then from those reviews, we take
+        the content, reviewerId, and get the upvote count and downvote
+        count.
+        using the reviewerId, we get the profilepicture, firstname, and
+        lastname 
+        */
+        System.out.println("To be implemented.");
+        return null;
     }
-    
 
 
 }
