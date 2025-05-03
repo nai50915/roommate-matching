@@ -18,6 +18,7 @@ import uga.roommate.cs4370.services.UserService;
 import uga.roommate.cs4370.services.ProfileService;
 import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.models.Rate;
+import uga.roommate.cs4370.models.ProfileReview;
 
 @Controller
 @RequestMapping("/Profile")
@@ -52,11 +53,13 @@ public class ProfileController {
         double rating = profileService.getRating(userId);
         Rate profileRating = new Rate(rating);
         List<String> tags = profileService.getTags(userId);
+        List<ProfileReview> reviews = profileService.getReviews(userId);
         
         // Add user object to the model
         mv.addObject("tags", tags);
         mv.addObject("user", user);
         mv.addObject("rate", profileRating);
+        mv.addObject("reviews", reviews);
 
         // Optional error message
         // mv.addObject("errorMessage", error);

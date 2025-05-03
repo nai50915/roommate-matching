@@ -69,3 +69,4 @@ public ModelAndView viewPastRoommates(@RequestParam(required = false) String err
     //     return "redirect:/Your-Past-Roommate?userId=" + currentUserId;
     // }
 }
+

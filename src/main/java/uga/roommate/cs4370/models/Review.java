@@ -13,6 +13,7 @@ public class Review {
   private final int downvoteCount;
   private final int rating;
   private final List<String> tags;
+
  
   public Review (String reviewId, String content, User reviewer, User reviewee, String reviewDate, int upvoteCount, int downvoteCount, int rating, ArrayList<String> tags) {
     this.reviewId = reviewId;
