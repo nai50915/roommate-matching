@@ -605,3 +605,44 @@
     background-color: whitesmoke;
     color: black;
 }
+
+.pr_divider{
+  text-align: center;
+  font-size: 30px;
+  background-color: whitesmoke;
+  padding: 7px;
+}
+
+.pr_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.pr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  width: 20%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.pr_img {
+  width: 50%;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.pr_name {
+  font-weight: bold;
+}
+
