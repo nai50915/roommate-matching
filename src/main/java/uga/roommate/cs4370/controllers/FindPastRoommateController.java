@@ -29,7 +29,7 @@ public class FindPastRoommateController {
 
     @GetMapping
     public ModelAndView showAllUsers(@RequestParam(name = "error", required = false) String error) {
-        ModelAndView mv = new ModelAndView("find_past_rooommates_page");
+        ModelAndView mv = new ModelAndView("find_past_roommates_page");
 
         try {
             String userId =userService.getLoggedInUser().getUserId();
@@ -37,6 +37,7 @@ public class FindPastRoommateController {
             List<User> users = findPastRoommateService.getAllUsersExcept(userId);
             System.out.println("Users: " + users.get(0).getFirstName());
             System.out.println("Users: " + users.get(1).getFirstName());
+            System.out.println("Users: " + users.get(1).getImagePath());
             
             if (error != null) {
 
