@@ -53,7 +53,7 @@ create table if not exists tag (
 INSERT INTO tag (tagName) VALUES ('Clean');
 INSERT INTO tag (tagName) VALUES ('Messy');
 INSERT INTO tag (tagName) VALUES ('EB'); 
-INSERT INTO tag (tagName) VALUES ('NO'); 
+INSERT INTO tag (tagName) VALUES ('NO');
 INSERT INTO tag (tagName) VALUES ('LS'); 
 INSERT INTO tag (tagName) VALUES ('Smoker');
 INSERT INTO tag (tagName) VALUES ('Drinker');
