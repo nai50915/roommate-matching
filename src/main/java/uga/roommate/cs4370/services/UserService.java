@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -127,6 +128,37 @@ public class UserService {
             return rowsAffected > 0;
         }
     }
+
+
+    public User findByFirstAndLastName(String firstName, String lastName) {
+        String sql = "SELECT * FROM user WHERE firstName = ? AND lastName = ?";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    
+            stmt.setString(1, firstName);
+            stmt.setString(2, lastName);
+    
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                        String userId = rs.getString("userId");
+                        String username = rs.getString("username");
+                        String firstNameFound = rs.getString("firstName");
+                        String lastNameFound = rs.getString("lastName");
+                        String bio = rs.getString("description");
+                        String imagePath = rs.getString("imageUrl");
+                        // List<String> tags = getTags(userId);
+                        User user = new User(userId, username, firstNameFound, lastNameFound, bio, imagePath, null);
+                        return user;
+                } else {
+                    return null; // No user found
+                }
+            }
+    
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding user", e);
+        }
+    }
+    
 
 }
 

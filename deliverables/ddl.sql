@@ -50,6 +50,16 @@ create table if not exists tag (
 	primary key(tagId)
 );
 
+INSERT INTO tag (tagName) VALUES ('Clean');
+INSERT INTO tag (tagName) VALUES ('Messy');
+INSERT INTO tag (tagName) VALUES ('EB'); -- Early Bird
+INSERT INTO tag (tagName) VALUES ('NO'); -- Night Owl
+INSERT INTO tag (tagName) VALUES ('LS'); -- Light Sleeper
+INSERT INTO tag (tagName) VALUES ('Smoker');
+INSERT INTO tag (tagName) VALUES ('Drinker');
+INSERT INTO tag (tagName) VALUES ('Pets');
+INSERT INTO tag (tagName) VALUES ('NP'); -- No Pets
+
 -- Create the reviewTag table
 create table if not exists reviewTag (
 	tagId int, 

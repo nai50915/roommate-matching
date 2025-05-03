@@ -439,20 +439,31 @@
     transition: background-color 0.3s, color 0.3s;
     font-weight: bold;
   }
-  
-.tag input[type="checkbox"] {
+
+  .tag input[type="checkbox"] {
     display: none; /* hide real checkbox */
   }
   
-.tag:hover {
+  .tag:hover {
     background-color: #dcdcdc;
   }
   
-.tag input[type="checkbox"]:checked + label,
-.tag input[type="checkbox"]:checked {
-    background-color: #007BFF;
+  /* .tag input[type="checkbox"]:checked {
+    background-color: #565656;
+  }
+  
+  input[type="checkbox"]:checked + .tag,
+  .tag input[type="checkbox"]:checked {
+    background-color: #565656;
+    color: white;
+  } */
+  
+  /* For a different structure where you need to target the label itself */
+  .tag:has(input[type="checkbox"]:checked) {
+    background-color: #565656;
     color: white;
   }
+  
 
 .rating-container {
     display: flex;

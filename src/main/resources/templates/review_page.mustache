@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Review</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <div class="review_nav">
@@ -24,17 +25,12 @@
         <h1>Review a Roomate</h1>
     </div>
     <div class="rating-container">
-        <form id="rating-form" method="POST" action="/submit-rating">
+        <form id="rating-form" method="post" action="/Review">
 
     <div class="select_person">
-        <label for="person" class="select_person_header">Select Person</label>
-        <select name="person_select" id="person_select">
-            <option value="1">User1</option>
-            <option value="2">User2</option>
-            <option value="3">User3</option>
-            <option value="4">User4</option>
-            <option value="5">User5</option>
-        </select>
+        {{> fragments/error_message}}
+        <input name="firstName" class="short-input full" type="text" placeholder="First Name">
+        <input name="lastName" class="short-input full" type="text" placeholder="Last Name">
     </div>
 
     <div class="star_rating">
@@ -50,28 +46,40 @@
 
     <div class="review_tags">
         <label class="tag">
-          <input type="checkbox" name="tags" value="tag1">
-          tag1
+          <input type="checkbox" name="Clean" value="Clean">
+          Clean
         </label>
         <label class="tag">
-          <input type="checkbox" name="tags" value="tag2">
-          tag2
+          <input type="checkbox" name="Messy" value="Messy">
+          Messy
         </label>
         <label class="tag">
-          <input type="checkbox" name="tags" value="tag3">
-          tag3
+          <input type="checkbox" name="EB" value="EB">
+          Early Bird
         </label>
         <label class="tag">
-            <input type="checkbox" name="tags" value="tag3">
-            tag3
+            <input type="checkbox" name="NO" value="NO">
+            Night Owl
         </label>
         <label class="tag">
-            <input type="checkbox" name="tags" value="tag3">
-            tag3
+            <input type="checkbox" name="LS" value="LS">
+            Light Sleeper
         </label>
         <label class="tag">
-            <input type="checkbox" name="tags" value="tag3">
-            tag3
+            <input type="checkbox" name="Smoker" value="Smoker">
+            Smoker
+        </label>
+        <label class="tag">
+            <input type="checkbox" name="Drinker" value="Drinker">
+            Drinker
+        </label>
+        <label class="tag">
+            <input type="checkbox" name="Pets" value="Pets">
+            Pets
+        </label>
+        <label class="tag">
+            <input type="checkbox" name="NP" value="NP">
+            No Pets
         </label>
     </div>  
 
@@ -83,7 +91,7 @@
     
  
     <div class="submit-container">
-        <button type="submit">Submit Review</button>
+        <button type="submit" class="action-button">Submit Review</button>
     </div>
     </form>
     </div>
