@@ -59,14 +59,81 @@ create table if not exists reviewTag (
     foreign key (reviewId) references review(reviewId) on delete cascade
 ); 
 
--- Create the userTag table
-create table if not exists userTag (
-	tagId int, 
+-- Create the userAttributes table
+create table if not exists userAttributes (
+	attrId int, 
 	userId int not null, 
-	primary key (tagId, userId), 
-    foreign key (tagId) references tag(tagId) on delete cascade,
-    foreign key (userId) references user(userId) on delete cascade
+	primary key (userId, attrId), 
+	foreign key (userId) references user(userId) on delete cascade,
+	foreign key (attrId) references allUserAttributes(attrId) on delete cascade
 );
+
+-- create the allUserAttributes table
+Create table if not exists allUserAttributes (
+    attrId int auto_increment, 
+    name varchar(200) not null unique, 
+    primary key (attrId)
+);
+-- Year in School
+INSERT INTO allUserAttributes (name) VALUES
+  ('Freshman'),
+  ('Sophomore'),
+  ('Junior'),
+  ('Senior'),
+  ('Graduate Student');
+
+-- Studying Scopes / Majors
+INSERT INTO allUserAttributes (name) VALUES
+  ('Business Major'),
+  ('Science Major'),
+  ('Public Affairs Major'),
+  ('Medical Field'),
+  ('Engineering Major'),
+  ('Law Student');
+
+-- Cleanliness Habits
+INSERT INTO allUserAttributes (name) VALUES
+  ('Does not mind a little mess'), 
+  ('Can be a little cluttered')
+  ('Cleanliness Obsessed');
+
+-- Productivity / Schedule
+INSERT INTO allUserAttributes (name) VALUES
+  ('Early Bird'),
+  ('Night Owl'),
+  ('Needs Quiet Time to Focus');
+
+-- Religion / Spirituality
+INSERT INTO allUserAttributes (name) VALUES
+  ('Religious'),
+  ('Not Religious'),
+  ('Muslim'),
+  ('Christian'),
+  ('Jewish'),
+  ('Polytheist');
+
+-- Dating Habits
+INSERT INTO allUserAttributes (name) VALUES
+  ('Currently Dating'),
+  ('Expect Overnight Guests'),
+  ('Has a Partner');
+
+-- Social Habits
+INSERT INTO allUserAttributes (name) VALUES
+  ('Drinks Alcohol'),
+  ('Smokes'),
+  ('Dry'), 
+  ('No Drinking or Smoking Tolerated')
+  ('Likes to Host');
+
+-- Pets
+INSERT INTO allUserAttributes (name) VALUES
+  ('Has a Pet'),
+  ('Has a Cat'),
+  ('Has a Dog'),
+  ('Has Other Type of Pet'),
+  ('Plans to Get a Pet'),
+  ('No Pets Please');
 
 -- Create the match table
 create table if not exists matches (

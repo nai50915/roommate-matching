@@ -1,0 +1,11 @@
+<form method="post" action="/profile/attributes">
+    {{#allAttributes}}
+        <input type="checkbox" 
+               name="attributes" 
+               value="{{attrId}}" 
+               id="attr_{{attrId}}" 
+               {{#selected}}checked{{/selected}}>
+        <label for="attr_{{attrId}}">{{name}}</label><br>
+    {{/allAttributes}}
+    <button type="submit">Save</button>
+</form>
