@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import uga.roommate.cs4370.models.Review;
+import uga.roommate.cs4370.models.User;
 
 @Service
 public class ReviewService {
@@ -27,11 +28,6 @@ public class ReviewService {
      * Create a new review in the database
      */
     public Review createReview() throws SQLException {
-        System.out.println("To be implemented.");
-        return null;
-    }
-
-    private List<String> extractTags() {
         System.out.println("To be implemented.");
         return null;
     }
