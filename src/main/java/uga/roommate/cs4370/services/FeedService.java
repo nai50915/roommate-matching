@@ -16,15 +16,15 @@ import java.util.ArrayList;
 import uga.roommate.cs4370.models.Review;
 
 /**
- * This is a service class to assist in building the home page.
+ * This is a service class to assist in building the feed page.
  * This class interacts with the database through a dataSource instance.
  */
 @Service
-public class HomeService {
+public class FeedService {
     private final DataSource dataSource;
 
     @Autowired
-    public HomeService (DataSource dataSource) {
+    public FeedService (DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -32,7 +32,7 @@ public class HomeService {
      * Retrieve ALL reviews ordered from most popular to least 
      * @return
      */
-    public List<Review> getHomeFeed () {
+    public List<Review> getFeed () {
         System.out.println("To be implemented.");
         return null;
     }

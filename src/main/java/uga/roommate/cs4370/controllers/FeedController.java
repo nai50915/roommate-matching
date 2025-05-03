@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import uga.roommate.cs4370.services.ReviewService;
+import uga.roommate.cs4370.services.FeedService;
 
 /**
  * Handles /Feed URL
