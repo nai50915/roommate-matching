@@ -48,7 +48,7 @@ public class PastRoommateService {
         }
     }
 
-    public List<User> getPastRoommates(int userId) throws SQLException {
+    public List<User> getPastRoommates(String userId) throws SQLException {
         List<User> pastRoommates = new ArrayList<>();
         String sql = "SELECT u.* FROM user u " +
                      "JOIN pastRoommate pr ON (pr.userA = ? AND u.userId = pr.userB) " +
@@ -56,8 +56,8 @@ public class PastRoommateService {
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            stmt.setInt(2, userId);
+            stmt.setString(1, userId);
+            stmt.setString(2, userId);
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {

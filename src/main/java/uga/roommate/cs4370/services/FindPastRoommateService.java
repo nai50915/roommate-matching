@@ -22,29 +22,32 @@ public class FindPastRoommateService {
         this.dataSource = dataSource;
     }
 
-    public List<User> getAllUsersExcept(int userId) throws SQLException {
+    public List<User> getAllUsersExcept(String userId) throws SQLException {
         List<User> allUsers = new ArrayList<>();
-        String sql = """
-            SELECT * FROM user
-            WHERE userId != ?
-              AND userId NOT IN (
-                  SELECT userB FROM pastRoommate WHERE userA = ?
-                  UNION
-                  SELECT userA FROM pastRoommate WHERE userB = ?
-              )
-        """;
+        String sql = "SELECT * FROM user " +
+             "WHERE userId != ? " +
+             "AND userId NOT IN ( " +
+             "    SELECT userB FROM pastRoommate WHERE userA = ? " +
+             "    UNION " +
+             "    SELECT userA FROM pastRoommate WHERE userB = ? " +
+             ")";
 
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userId);
-            stmt.setInt(2, userId);
-            stmt.setInt(3, userId);
+            stmt.setString(1, userId);
+            stmt.setString(2, userId);
+            stmt.setString(3, userId);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     String firstName = rs.getString("firstName");
                     String lastName = rs.getString("lastName");
                     String userIdStr = rs.getString("userId");
+                    // String username = rs.getString("username");
+                    // String bio = rs.getString("bio");
+                    // String imagePath = rs.getString("imagePath");
+                    // List<String> tags = new ArrayList<>();
+                    // String tagsStr = rs.getString("tags");
                     User user = new User(userIdStr, firstName, lastName);
 
                     allUsers.add(user);
