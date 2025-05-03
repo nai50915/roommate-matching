@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.sql.DataSource;
 
 import java.util.List;
@@ -23,10 +26,14 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 @Service
 public class ReviewService {
     private final DataSource dataSource;
+    private final VoteService voteService;
+    private final ProfileService profileService;
 
     @Autowired
-    public ReviewService(DataSource dataSource) {
+    public ReviewService(DataSource dataSource, VoteService voteService, ProfileService profileService) {
         this.dataSource = dataSource;
+        this.voteService = voteService;
+        this.profileService = profileService;
     }
     
     /**
@@ -97,19 +104,92 @@ public class ReviewService {
         }
     }
     
-
     /**
      * Retrieve all reviews from the database
      * @return reviews A list of all the reviews 
      */
     public List<Review> getAllReviews() {
+        System.out.println("Getting reviews...");
         List<Review> reviews = new ArrayList<>();
+        String sql = "SELECT * FROM review ORDER BY createdAt DESC";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    String reviewId = rs.getString("reviewId");
+                    String reviewerId = rs.getString("reviewerId");
+                    String revieweeId = rs.getString("revieweeId");
+                    String content = rs.getString("content");
+                    String ratingValue = rs.getString("ratingValue");
+                    String reviewDate = rs.getString("createdAt");
+
+                    int upvoteCount = voteService.countUpvotes(reviewId);
+                    int downvoteCount = voteService.countDownvotes(reviewId);
+
+                    User reviewer = profileService.getUser(reviewerId);
+                    User reviewee = profileService.getUser(revieweeId);
+
+                    if (reviewer.getImagePath() == null || reviewer.getImagePath().isEmpty()) {
+                        reviewer.setImagePath("/images/default.png");
+                    }
+                    if (reviewee.getImagePath() == null || reviewee.getImagePath().isEmpty()) {
+                        reviewee.setImagePath("/images/default.png");
+                    }
+    
+
+                    ArrayList<String> tags = getReviewTags(reviewId);
+
+                    DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    LocalDateTime localDateTime = LocalDateTime.parse(reviewDate, parser);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy, hh:mm a");
+                    String formattedPostDate = formatter.format(localDateTime);
+
+                    int rating = Integer.valueOf(ratingValue);
+
+                    Review review = new Review (reviewId, content, reviewer, reviewee,
+                                                formattedPostDate, upvoteCount, downvoteCount, rating, tags);
+                    
+                    System.out.println(review);
+
+                    reviews.add(review);
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         /*
         for this, we need to make sure we account for the loggedInUser to see if
         they have voted on a review 
         */
-        System.out.println("To be implemented.");
-        return null;
+        // System.out.println("To be implemented.");
+        return reviews;
+    }
+
+    /**
+     * Retrieves the tags for a review 
+     * 
+     * @param userId
+     * @return tags 
+     * @throws SQLException
+     */
+    private ArrayList<String> getReviewTags(String reviewId) {
+        System.out.println("GETTAGS: To be tested.");
+        ArrayList<String> tags = new ArrayList<>();
+        String sql = "SELECT t.tagName FROM reviewTag r, tag t WHERE r.reviewId = ? AND r.tagId = t.tagId";
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, reviewId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        String tag = rs.getString("tagName");
+                        tags.add(tag);
+                    }
+                }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(tags);
+        return tags;
     }
 
 }

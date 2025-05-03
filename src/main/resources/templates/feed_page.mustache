@@ -21,6 +21,8 @@
         </nav>
     </div>
     <div class="feed">
-        {{> fragments/feed_post}}
+        {{#reviews}}
+            {{> fragments/feed_post}}
+        {{/reviews}}
     </div>
 </body>
