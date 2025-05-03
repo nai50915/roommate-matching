@@ -95,9 +95,9 @@ public class ProfileService {
      * @return double representing average user rating 
      * @throws SQLException
      */
-    private double getRating(String userId) throws SQLException {
+    public double getRating(String userId) throws SQLException {
         System.out.println("GETRATING: To be tested.");
-        String sql = "SELECT AVG(rating) FROM review WHERE revieweeId = ?";
+        String sql = "SELECT AVG(ratingValue) FROM review WHERE revieweeId = ?";
         try (Connection conn = dataSource.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {
          ps.setString(1, userId);
@@ -105,9 +105,9 @@ public class ProfileService {
            if (rs.next()) {
              return rs.getDouble(1);
            }
+           else return 0;
          }
         }
-        return -1;
     }
 
     /**
