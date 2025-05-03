@@ -4,21 +4,21 @@
                 <div class="feed_img"></div>
             </div>
             <div class="feed_content">
-                <div class="feed_name">Roommate for Roommate</div>
-                <div class="feed_desc">Roomate comment</div>
+                <div class="feed_name">{{reviewer.username}} for {{reviewee.username}}</div>
+                <div class="feed_desc">{{content}}</div>
             </div>
             <div class="feed_interaction">
 
                 <form method="POST" action="/like" class="interaction_form">
-                    <input type="hidden" name="feed_id" value="123"> <!-- feed ID -->
+                    <input type="hidden" name="feed_id" value="{{reviewId}}">
                     <button type="submit" class="feed_likes"></button>
                 </form>
 
-                <div>count</div>
-                <div>count</div>
+                <div>{{upvoteCount}}</div>
+                <div>{{downvoteCount}}</div>
                   
                 <form method="POST" action="/dislike" class="interaction_form">
-                    <input type="hidden" name="feed_id" value="123"> <!-- feed ID -->
+                    <input type="hidden" name="feed_id" value="{{reviewId}}">
                     <button type="submit" class="feed_dislikes"></button>
                 </form>
 

@@ -14,7 +14,7 @@ public class User {
   private final String firstName;
   private final String lastName; 
   private final String bio;
-  private final String imagePath;
+  private String imagePath;
   private final List<String> tags;
 
   public User (String userId, String username, String firstName, String lastName, String bio, String imagePath) {
@@ -75,8 +75,12 @@ public class User {
     return bio;
   }
 
-  public String getImage() {
+  public String getImagePath() {
     return imagePath;
+  }
+
+  public void setImagePath(String imagePath) {
+    this.imagePath = imagePath;
   }
 
   public List<String> getTags() {
