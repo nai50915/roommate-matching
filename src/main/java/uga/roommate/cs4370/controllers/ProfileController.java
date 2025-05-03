@@ -3,6 +3,7 @@ package uga.roommate.cs4370.controllers;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +51,10 @@ public class ProfileController {
         User user = profileService.getUser(userId); // Replace this with real service call
         double rating = profileService.getRating(userId);
         Rate profileRating = new Rate(rating);
+        List<String> tags = profileService.getTags(userId);
+        
         // Add user object to the model
+        mv.addObject("tags", tags);
         mv.addObject("user", user);
         mv.addObject("rate", profileRating);
 

@@ -176,9 +176,21 @@
 }
   
 .profile_tags {
-    font-size: 15px;
-    color: #666;
-  }
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, auto));
+  gap: 10px;
+  padding: 10px;
+}
+
+.profile_tag {
+  background-color: #a9a9a9;
+  padding: 8px 16px;
+  border-radius: 999px; /* Makes it oval */
+  font-size: 14px;
+  text-align: center;
+  cursor: default;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
 
 .profile_divider {
     text-align: center;

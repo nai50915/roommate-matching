@@ -70,10 +70,13 @@ public class ProfileService {
      * @return tags 
      * @throws SQLException
      */
-    private List<String> getTags(String userId) throws SQLException {
+    public List<String> getTags(String userId) throws SQLException {
         System.out.println("GETTAGS: To be tested.");
         List<String> tags = new ArrayList<>();
-        String sql = "SELECT t.tagName FROM userTag u, tag t WHERE userId = ? AND u.tagId = t.tagId";
+        String sql = "SELECT DISTINCT t.tagName " + 
+            "FROM user u, tag t, reviewTag tg, review r " +
+            "WHERE userId = ? AND u.userId = r.revieweeId AND " +
+            "r.reviewId = tg.reviewId AND tg.tagId = t.tagId";
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
                 ps.setString(1, userId);
@@ -84,6 +87,11 @@ public class ProfileService {
                     }
                 }
         }
+
+        if (tags.isEmpty()) {
+            tags.add("No tags yet");
+        }
+        
         System.out.println(tags);
         return tags;
     }

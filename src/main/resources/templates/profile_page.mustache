@@ -34,7 +34,11 @@
                 </div>
             </div>
             <div class="profile_desc">{{user.bio}}</div>
-            <div class="profile_tags">Tags</div>
+            <div class="profile_tags">
+                {{#tags}}
+                    {{> fragments/profile_tag}}
+                {{/tags}}
+            </div>
         </div>
     </div>
     </div>
