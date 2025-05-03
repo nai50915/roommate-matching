@@ -74,7 +74,7 @@ public class LoginController {
         if (isAuthenticated) {
             // Redirect to home page if authentication is successful.
             System.out.println("Going to profile");
-            return "redirect:/profile";
+            return "redirect:/Profile";
         } else {
             // Redirect back to the login page with an error message if authentication
             // fails.
