@@ -53,6 +53,19 @@ public class User {
     this.attributes = attributes;
   }
 
+  public User(String userId, String username, String firstName, String lastName, String bio, String imagePath,
+  ArrayList<String> tags) {
+    this.userId = userId;
+    this.username = username;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.bio = bio;
+    this.imagePath = imagePath;
+    this.tags = tags;
+    this.attributes = new ArrayList<>();
+  }
+
+
   private static String getAvatarPath(String userId) {
     int fileNo = (userId.hashCode() % 20) + 1;
     String avatarFileName = String.format("avatar_%d.png", fileNo);

@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
 
+import uga.roommate.cs4370.models.ProfileReview;
 import uga.roommate.cs4370.models.Review;
 import uga.roommate.cs4370.models.User;
 
@@ -48,10 +50,11 @@ public class ProfileService {
                         String lastName = rs.getString("lastName");
                         String bio = rs.getString("description");
                         String imagePath = rs.getString("imageUrl");
-                        List<String> tags = getTags(userId);
+                        ArrayList<String> tags = getTags(userId);
                         User user = new User(userId, username, firstName, lastName, bio, imagePath, tags);
                         return user;
-                    }
+                    }  
+
            }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,17 +67,6 @@ public class ProfileService {
          */
         return null;
     }
-
-    private static final Map<String, String> TAG_MAP = Map.of(
-            "Clean", "Clean",
-            "Messy", "Messy",
-            "EB", "Early Bird",
-            "NO", "Night Owl",
-            "LS", "Light Sleeper",
-            "Smoker", "Smoker",
-            "Drinker", "Drinker",
-            "Pets", "Pets",
-            "NP", "No Pets");
 
     private static final Map<String, String> TAG_MAP = Map.of(
             "Clean", "Clean",
@@ -118,9 +110,9 @@ public class ProfileService {
      * @return tags
      * @throws SQLException
      */
-    public List<String> getTags(String userId) {
+    public ArrayList<String> getTags(String userId) {
         System.out.println("GETTAGS: To be tested.");
-        List<String> tags = new ArrayList<>();
+        ArrayList<String> tags = new ArrayList<>();
         String sql = "SELECT DISTINCT t.tagName " +
                 "FROM user u, tag t, reviewTag tg, review r " +
                 "WHERE userId = ? AND u.userId = r.revieweeId AND " +
@@ -131,7 +123,7 @@ public class ProfileService {
                 try (ResultSet rs = ps.executeQuery()) {
                     while (rs.next()) {
                         String tag = rs.getString("tagName");
-                        String tagFull = TAG_MAP.getOrDeafult(tag, tag);
+                        String tagFull = TAG_MAP.getOrDefault(tag, tag);
                         tags.add(tag);
                     }
                 }
