@@ -1,6 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Past Roommates</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="fpr_nav">
+        <nav>
+            <ul>
+                <li><a href="/Profile">Profile</a></li>
+                <li><a href="/Matches">Matches</a></li>
+                <li><a href="/Feed">Feed</a></li>
+                <li><a href="/Review">Review</a></li>
+                <li><a href="/Find-Past-Roommate">Find Past Roommates</a></li>
+                <li><a class="active" href="/Your-Past-Roommate">Your Past Roommates</a></li>
+                <li style="float:right"><a href="/login#logOut">LogOut</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="fpr_header">
+        <h1>Your Past Roommates</h1>
+    </div>
+
+    <div class="your_past_rm_container">
+        {{#pastRoommates}}
         <div class="pr">
-            <img class="pr_img" src="https://media.istockphoto.com/id/525982128/photo/the-cat-aggression.webp?a=1&b=1&s=612x612&w=0&k=20&c=gwJo4c-UnTpB6LMALt2i09aIIDbbHPituWRDwbl4gR8=" alt="Description of the image">
-            <div class = "pr_name">Name</div>
-            <div class = "pr_rating">X/5</div>
-            <div class = "pr_your_rate">You rated FirstName a X/5</div>
+            <img class="pr_img" src="https://media.istockphoto.com/id/525982128/photo/the-cat-aggression.webp?a=1&b=1&s=612x612&w=0&k=20&c=gwJo4c-UnTpB6LMALt2i09aIIDbbHPituWRDwbl4gR8=" alt="Roommate Image">
+            <div class="pr_name">{{firstName}} {{lastName}}</div>
+            
         </div>
+        {{/pastRoommates}}
+
+        {{^pastRoommates}}
+        <p>No past roommates found.</p>
+        {{/pastRoommates}}
+    </div>
+</body>
+</html>
