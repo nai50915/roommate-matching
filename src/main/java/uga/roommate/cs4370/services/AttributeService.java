@@ -25,27 +25,19 @@ public class AttributeService {
     /**
      * Retrieve all attributes from database
      * 
-     * @return list of attributes 
+     * @return list of attributes
      */
     public List<Attribute> getAllAttributes() {
         List<Attribute> attributes = new ArrayList<>();
-<<<<<<< HEAD
         String sql = "SELECT attrId, name, category FROM allUserAttributes";
-=======
-        String sql = "SELECT attrId, name FROM allUserAttributes";
->>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 attributes.add(new Attribute(
                         rs.getInt("attrId"),
-<<<<<<< HEAD
                         rs.getString("name"),
                         rs.getString("category")));
-=======
-                        rs.getString("name")));
->>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,7 +69,7 @@ public class AttributeService {
     }
 
     /**
-     * Update database with newly selected attributes for user 
+     * Update database with newly selected attributes for user
      * 
      * @param userId
      * @param attributeIds
@@ -87,7 +79,7 @@ public class AttributeService {
         String insertSql = "INSERT INTO userAttributes (userId, attrId) VALUES (?, ?)";
 
         try (Connection conn = dataSource.getConnection()) {
-            conn.setAutoCommit(false); 
+            conn.setAutoCommit(false);
 
             try (PreparedStatement del = conn.prepareStatement(deleteSql)) {
                 del.setString(1, userId);
@@ -102,7 +94,6 @@ public class AttributeService {
                 }
             }
 
-<<<<<<< HEAD
             conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -117,7 +108,6 @@ public class AttributeService {
      */
     public List<Attribute> getAllAttributesWithSelection(String userId) {
         List<Integer> selectedIds = getUserAttributeIds(userId);
-<<<<<<< HEAD
         List<Attribute> all = getAllAttributes();
 
         for (Attribute attr : all) {
@@ -125,14 +115,5 @@ public class AttributeService {
         }
 
         return all;
-=======
-        List<Attribute> allAttrs = getAllAttributes();
-
-        for (Attribute attr : allAttrs) {
-            attr.setSelected(selectedIds.contains(attr.getAttrId()));
-        }
-
-        return allAttrs;
->>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
     }
 }

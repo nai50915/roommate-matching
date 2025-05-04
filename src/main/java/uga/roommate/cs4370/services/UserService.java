@@ -76,7 +76,6 @@ public class UserService {
      */
     public void unAuthenticate() {
         loggedInUser = null;
-        System.out.println("Logged In User has been logged out = " + loggedInUser);
     }
 
     /**
@@ -123,7 +122,7 @@ public class UserService {
      * 
      * @param firstName
      * @param lastName
-     * @return user if found 
+     * @return user if found
      */
     public User findByFirstAndLastName(String firstName, String lastName) {
         String sql = "SELECT * FROM user WHERE firstName = ? AND lastName = ?";
@@ -144,7 +143,7 @@ public class UserService {
                     User user = new User(userId, username, firstNameFound, lastNameFound, bio, imagePath, null, null);
                     return user;
                 } else {
-                    return null; 
+                    return null;
                 }
             }
 
@@ -153,5 +152,4 @@ public class UserService {
         }
     }
 
-    =======>>>>>>>79 cfbe088a68deff5a8d4215c9f139f85dfafaa8
 }
