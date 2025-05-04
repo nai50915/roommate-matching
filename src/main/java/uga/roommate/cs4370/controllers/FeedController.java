@@ -40,7 +40,6 @@ public class FeedController {
         List<Review> reviews = reviewService.getAllReviews();
         mv.addObject("reviews", reviews);
         mv.addObject("errorMessage", error);
-        System.out.println("Going to feed page...");
         return mv;
     }
 

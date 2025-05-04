@@ -1,5 +1,8 @@
 package uga.roommate.cs4370.models;
 
+/**
+ * Rating for a user 
+ */
 public class Rate {
 
     private final double rating;

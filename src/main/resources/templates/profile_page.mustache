@@ -53,7 +53,7 @@
                     </div>
                     {{#isOwnProfile}}
                     <div class="profile_actions">
-                        <a href="/profile/attributes" class="action-button">Edit Attributes</a>
+                        <a href="/Profile/Attributes" class="action-button">Edit Attributes</a>
                     </div>
                     {{/isOwnProfile}}
                 </div>
@@ -69,6 +69,29 @@
                     {{/tags}}
                 </div>
             </div>
+<<<<<<< HEAD
+=======
+            <div class="profile_desc">{{user.bio}}</div>
+            <div class="profile_attrs">
+            <strong>{{user.firstName}}'s Attributes:</strong>
+    <div class="attr-chip-container">
+        {{#user.attributes}}
+            <span class="attr-chip">{{.}}</span>
+        {{/user.attributes}}
+        {{^user.attributes}}
+            <span>No attributes listed</span>
+        {{/user.attributes}}
+    </div>
+
+    {{#isOwnProfile}}
+    <div class="profile_actions">
+        <a href="/profile/attributes" class="action-button">Edit Attributes</a>
+    </div>
+    {{/isOwnProfile}}
+</div>
+
+            <div class="profile_tags">Tags</div>
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
         </div>
     </div>
 

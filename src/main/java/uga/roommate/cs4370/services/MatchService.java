@@ -80,17 +80,11 @@ public class MatchService {
      * of their tags in common
      */
     public void matchUser(String matchAId, String matchBId) {
-        System.out.println("Attempting to match " + matchAId + " and " + matchBId);
-
         List<String> tagsA = profileService.getTags(matchAId);
         List<String> tagsB = profileService.getTags(matchBId);
 
-        System.out.println("Tags for " + matchAId + ": " + tagsA);
-        System.out.println("Tags for " + matchBId + ": " + tagsB);
-
         double percentageMatch = calculatePercentageMatch(tagsA, tagsB);
         if (percentageMatch < 0.5) {
-            System.out.println("Users do not meet 50%% threshold. No match inserted.");
             return;
         }
 
@@ -100,7 +94,6 @@ public class MatchService {
 
         boolean formatFollowed = checkFormat(matchAId, matchBId);
         if (!formatFollowed) {
-            System.out.println("Swapping user IDs to maintain (min, max) format.");
             String temp = matchBId;
             matchBId = matchAId;
             matchAId = temp;
@@ -108,7 +101,6 @@ public class MatchService {
 
         try {
             if (isMatched(matchAId, matchBId)) {
-                System.out.println("Match already exists. Skipping insert.");
                 return;
             }
         } catch (SQLException e) {
@@ -123,11 +115,8 @@ public class MatchService {
             ps.setString(1, matchAId);
             ps.setString(2, matchBId);
             ps.setInt(3, commonTags);
-            System.out.println("Executing match insert: [" + matchAId + ", " + matchBId + ", " + commonTags + "]");
             ps.executeUpdate();
-            System.out.println("Match successfully inserted.");
         } catch (SQLException e) {
-            System.err.println("SQL Exception during match insertion: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -139,7 +128,6 @@ public class MatchService {
      * @return true if matched, false otherwise
      */
     public boolean isMatched(String matchAId, String matchBId) throws SQLException {
-        System.out.println("To be tested.");
         boolean formatFollowed = checkFormat(matchAId, matchBId);
         if (!formatFollowed) {
             String temp = matchBId;
@@ -183,10 +171,6 @@ public class MatchService {
     }
 
     public double calculatePercentageMatch(List<String> tagsA, List<String> tagsB) {
-
-        System.out.println("AAAAAAAAAASJZHDSHDFSKHSFKH: " + tagsA);
-        System.out.println("AAAAAAAAAASJZHDSHDFSKHSFKH: " + tagsB);
-
         if (tagsA.get(0).equals("No tags yet") || tagsB.get(0).equals("No tags yet")) {
             return 0.0;
         }
@@ -199,8 +183,6 @@ public class MatchService {
 
         double percentA = (double) commonTags / setA.size();
         double percentB = (double) commonTags / setB.size();
-        System.out.printf("Common tags: %d. MatchA %.2f%%, MatchB %.2f%%\n", commonTags, percentA * 100,
-                percentB * 100);
 
         return Math.max(percentA, percentB);
     }

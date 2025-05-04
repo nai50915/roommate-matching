@@ -9,6 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is a service class to assist in building the attribute page.
+ * This class interacts with the database through a dataSource instance.
+ */
 @Service
 public class AttributeService {
     private final DataSource dataSource;
@@ -18,8 +22,12 @@ public class AttributeService {
         this.dataSource = dataSource;
     }
 
-    // Get all available attributes
-    public List<Attribute> getAllAttributes() throws SQLException {
+    /**
+     * Retrieve all attributes from database
+     * 
+     * @return list of attributes
+     */
+    public List<Attribute> getAllAttributes() {
         List<Attribute> attributes = new ArrayList<>();
         String sql = "SELECT attrId, name, category FROM allUserAttributes";
         try (Connection conn = dataSource.getConnection();
@@ -31,12 +39,19 @@ public class AttributeService {
                         rs.getString("name"),
                         rs.getString("category")));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return attributes;
     }
 
-    // Get selected attributes for a user (attrIds only)
-    public List<Integer> getUserAttributeIds(String userId) throws SQLException {
+    /**
+     * Get attributeIds that user selected
+     * 
+     * @param userId
+     * @return attributeIds list of selected attr
+     */
+    public List<Integer> getUserAttributeIds(String userId) {
         List<Integer> attributeIds = new ArrayList<>();
         String sql = "SELECT attrId FROM userAttributes WHERE userId = ?";
         try (Connection conn = dataSource.getConnection();
@@ -47,25 +62,30 @@ public class AttributeService {
                     attributeIds.add(rs.getInt("attrId"));
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return attributeIds;
     }
 
-    // Save new attribute selections for user
-    public void updateUserAttributes(String userId, List<Integer> attributeIds) throws SQLException {
+    /**
+     * Update database with newly selected attributes for user
+     * 
+     * @param userId
+     * @param attributeIds
+     */
+    public void updateUserAttributes(String userId, List<Integer> attributeIds) {
         String deleteSql = "DELETE FROM userAttributes WHERE userId = ?";
         String insertSql = "INSERT INTO userAttributes (userId, attrId) VALUES (?, ?)";
 
         try (Connection conn = dataSource.getConnection()) {
-            conn.setAutoCommit(false); // begin transaction
+            conn.setAutoCommit(false);
 
-            // 1. Delete current user attributes
             try (PreparedStatement del = conn.prepareStatement(deleteSql)) {
                 del.setString(1, userId);
                 del.executeUpdate();
             }
 
-            // 2. Insert new attribute mappings
             for (Integer attrId : attributeIds) {
                 try (PreparedStatement ins = conn.prepareStatement(insertSql)) {
                     ins.setString(1, userId);
@@ -75,10 +95,18 @@ public class AttributeService {
             }
 
             conn.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public List<Attribute> getAllAttributesWithSelection(String userId) throws SQLException {
+    /**
+     * Get all attributes with selection
+     * 
+     * @param userId
+     * @return
+     */
+    public List<Attribute> getAllAttributesWithSelection(String userId) {
         List<Integer> selectedIds = getUserAttributeIds(userId);
         List<Attribute> all = getAllAttributes();
 
