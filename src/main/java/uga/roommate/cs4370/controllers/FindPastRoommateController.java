@@ -15,6 +15,9 @@ import uga.roommate.cs4370.services.FindPastRoommateService;
 import uga.roommate.cs4370.services.UserService;
 import uga.roommate.cs4370.models.User;
 
+/**
+ * Handles /Find-Past-Roommate URL
+ */
 @Controller
 @RequestMapping("/Find-Past-Roommate")
 public class FindPastRoommateController {
@@ -37,14 +40,11 @@ public class FindPastRoommateController {
             System.out.println("User ID: " + userId);
             List<User> users = findPastRoommateService.getAllUsersExcept(userId);
             System.out.println("Users: " + users.size());
-            // System.out.println("Users: " + users.get(0).getFirstName());
-            // System.out.println("Users: " + users.get(1).getFirstName());
-            // System.out.println("Users: " + users.get(1).getImagePath());
             
             if (error != null) {
-
                 mv.addObject("error", error);
             }
+
             mv.addObject("users", users);
             mv.addObject("currentUserId", userId); 
         } catch (SQLException e) {
@@ -53,6 +53,7 @@ public class FindPastRoommateController {
         return mv;
     }
 
+    // Adding a past roommate from find page 
     @PostMapping("/addPastRoommate")
     public String addPastRoommate(@RequestParam("currentUserId") String currentUserId,
                                   @RequestParam("newRoommateId") String newRoommateId) {

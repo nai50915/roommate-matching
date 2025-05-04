@@ -30,7 +30,6 @@ public class UserService {
     private final DataSource dataSource;
     // passwordEncoder is used for password security.
     private final BCryptPasswordEncoder passwordEncoder;
-    // This holds
     private User loggedInUser = null;
 
     /**
@@ -49,30 +48,20 @@ public class UserService {
      * Returns true if authentication is succesful. False otherwise.
      */
     public boolean authenticate(String username, String password) throws SQLException {
-        // Note the ? mark in the query. It is a place holder that we will later
-        // replace.
         final String sql = "select * from user where username = ?";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Following line replaces the first place holder with username.
             pstmt.setString(1, username);
 
             try (ResultSet rs = pstmt.executeQuery()) {
-                // Traverse the result rows one at a time.
-                // Note: This specific while loop will only run at most once
-                // since username is unique.
                 while (rs.next()) {
-                    // Note: rs.get.. functions access attributes of the current row.
                     String storedPasswordHash = rs.getString("password");
                     boolean isPassMatch = passwordEncoder.matches(password, storedPasswordHash);
-                    // Note:
                     if (isPassMatch) {
                         String userId = rs.getString("userId");
                         String firstName = rs.getString("firstName");
                         String lastName = rs.getString("lastName");
-
-                        // Initialize and retain the logged in user.
                         loggedInUser = new User(userId, null, firstName, lastName, null, null, null, null);
                     }
                     return isPassMatch;
@@ -112,13 +101,10 @@ public class UserService {
     public boolean registerUser(String username, String password, String firstName, String lastName, String description,
             String imageUrl)
             throws SQLException {
-        // Note the ? marks in the SQL statement. They are placeholders like mentioned
-        // above.
         final String registerSql = "insert into user (username, password, firstName, lastName, description, imageUrl) values (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement registerStmt = conn.prepareStatement(registerSql)) {
-            // Following lines replace the placeholders 1-4 with values.
             registerStmt.setString(1, username);
             registerStmt.setString(2, passwordEncoder.encode(password));
             registerStmt.setString(3, firstName);
@@ -126,12 +112,18 @@ public class UserService {
             registerStmt.setString(5, description);
             registerStmt.setString(6, imageUrl);
 
-            // Execute the statement and check if rows are affected.
             int rowsAffected = registerStmt.executeUpdate();
             return rowsAffected > 0;
         }
     }
 
+    /**
+     * Finds a user based on their first and last name
+     * 
+     * @param firstName
+     * @param lastName
+     * @return user if found 
+     */
     public User findByFirstAndLastName(String firstName, String lastName) {
         String sql = "SELECT * FROM user WHERE firstName = ? AND lastName = ?";
         try (Connection conn = dataSource.getConnection();
@@ -148,11 +140,10 @@ public class UserService {
                     String lastNameFound = rs.getString("lastName");
                     String bio = rs.getString("description");
                     String imagePath = rs.getString("imageUrl");
-                    // List<String> tags = getTags(userId);
                     User user = new User(userId, username, firstNameFound, lastNameFound, bio, imagePath, null, null);
                     return user;
                 } else {
-                    return null; // No user found
+                    return null; 
                 }
             }
 

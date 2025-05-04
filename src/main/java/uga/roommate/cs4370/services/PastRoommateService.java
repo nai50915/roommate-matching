@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.services.ProfileService;
 
+/**
+ * This is a service class to assist in building the past-roommate page.
+ * This class interacts with the database through a dataSource instance.
+ */
 @Service
 public class PastRoommateService {
     private final DataSource dataSource;
@@ -26,6 +30,13 @@ public class PastRoommateService {
         this.profileService = profileService;
     }
 
+    /**
+     * Adds past roommate 
+     * 
+     * @param userId1
+     * @param userId2
+     * @throws SQLException
+     */
     public void addPastRoommate(int userId1, int userId2) throws SQLException {
         int userA = Math.min(userId1, userId2);
         int userB = Math.max(userId1, userId2);
@@ -39,6 +50,13 @@ public class PastRoommateService {
         }
     }
 
+    /**
+     * Removes past roommate 
+     * 
+     * @param userId1
+     * @param userId2
+     * @throws SQLException
+     */
     public void removePastRoommate(int userId1, int userId2) throws SQLException {
         int userA = Math.min(userId1, userId2);
         int userB = Math.max(userId1, userId2);
@@ -52,6 +70,13 @@ public class PastRoommateService {
         }
     }
 
+    /**
+     * Retrieve all past roommates of logged-in user
+     * 
+     * @param userId
+     * @return pastRoommates all past roommates of the user
+     * @throws SQLException
+     */
     public List<User> getPastRoommates(String userId) throws SQLException {
         List<User> pastRoommates = new ArrayList<>();
         String sql = "SELECT u.userId FROM user u " +
@@ -65,10 +90,8 @@ public class PastRoommateService {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                // String firstName = rs.getString("firstName");
-                // String lastName = rs.getString("lastName");
                 String userIdStr = rs.getString("userId");
-                User user = profileService.getUser(userIdStr); // new User(userIdStr, null, firstName, lastName, null, null, null, null);
+                User user = profileService.getUser(userIdStr);
 
                 pastRoommates.add(user);
             }

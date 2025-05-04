@@ -1,5 +1,8 @@
 package uga.roommate.cs4370.models;
 
+/**
+ * Represents a profile review 
+ */
 public class ProfileReview {
     private final String reviewId;
     private final String revieweeFirstName;
