@@ -6,16 +6,15 @@ import java.util.ArrayList;
 /**
  * Represents a user of the roommate review platform.
  */
-
 public class User {
   private String userId;
   private String username;
   private String firstName;
   private String lastName;
   private String bio;
-  private String imagePath;
-  private List<String> tags;
-  private List<Attribute> attributes;
+  private String imagePath; // profile picture path
+  private List<String> tags; // user tags derived from reviews
+  private List<Attribute> attributes; // user selected attributes
 
   public User(String userId, String username, String firstName, String lastName,
       String bio, String imagePath,
@@ -30,7 +29,6 @@ public class User {
     this.attributes = (attributes != null) ? attributes : new ArrayList<>();
   }
 
-  // Getters and Setters
   public String getUserId() {
     return userId;
   }
