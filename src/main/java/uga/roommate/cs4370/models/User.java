@@ -65,6 +65,8 @@ public class User {
     this.attributes = new ArrayList<>();
   }
 
+  
+
 
   private static String getAvatarPath(String userId) {
     int fileNo = (userId.hashCode() % 20) + 1;
