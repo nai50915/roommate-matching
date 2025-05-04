@@ -79,7 +79,7 @@ create table if not exists userAttributes (
 );
 
 -- create the allUserAttributes table
-Create table if not exists allUserAttributes (
+create table if not exists allUserAttributes (
     attrId int auto_increment, 
     name varchar(200) not null unique, 
     category varchar(50), 
@@ -107,7 +107,7 @@ INSERT INTO allUserAttributes (name) VALUES
 -- Cleanliness Habits
 INSERT INTO allUserAttributes (name) VALUES
   ('does not mind mess'), 
-  ('can be a little cluttered')
+  ('can be a little cluttered'),
   ('cleanliness obsessed');
 
 -- Productivity / Schedule
@@ -137,7 +137,7 @@ INSERT INTO allUserAttributes (name) VALUES
   ('drinks'),
   ('smokes'),
   ('dry'), 
-  ('no drinking or smoking tolerated')
+  ('no drinking or smoking tolerated'),
   ('likes to host');
 
 -- Pets
