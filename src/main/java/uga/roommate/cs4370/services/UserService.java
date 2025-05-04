@@ -87,6 +87,7 @@ public class UserService {
      */
     public void unAuthenticate() {
         loggedInUser = null;
+        System.out.println("Logged In User has been logged out = " + loggedInUser);
     }
 
     /**
@@ -132,6 +133,7 @@ public class UserService {
         }
     }
 
+<<<<<<< HEAD
     public User findByFirstAndLastName(String firstName, String lastName) {
         String sql = "SELECT * FROM user WHERE firstName = ? AND lastName = ?";
         try (Connection conn = dataSource.getConnection();
@@ -161,4 +163,6 @@ public class UserService {
         }
     }
 
+=======
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
 }

@@ -46,16 +46,23 @@ public class ProfileService {
 
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
+<<<<<<< HEAD
 
             ps.setString(1, userId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+=======
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
                     String username = rs.getString("username");
                     String firstName = rs.getString("firstName");
                     String lastName = rs.getString("lastName");
                     String bio = rs.getString("description");
                     String imagePath = rs.getString("imageUrl");
+<<<<<<< HEAD
 
                     List<Attribute> attributes = getAttributes(userId);
                     ArrayList<String> tags = getTags(userId);
@@ -66,6 +73,12 @@ public class ProfileService {
                 } else {
                     System.err.println("GETUSER ERROR: No user found with ID: " + userId);
                     throw new SQLException("No user found for userId: " + userId);
+=======
+                    List<String> attributes = getAttributes(userId);
+                    List<String> tags = getTags(userId);
+                    User user = new User(userId, username, firstName, lastName, bio, imagePath, tags, attributes);
+                    return user;
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
                 }
             }
         }
@@ -123,9 +136,39 @@ public class ProfileService {
     }
 
     /**
+<<<<<<< HEAD
      * Retrieves the tags for a user (from reviews)
      * 
      * @param userId
+=======
+     * Retrieves personally prescribed attributes of user
+     * 
+     * @param userId
+     * @return attributes
+     * @throws SQLException
+     */
+    private List<String> getAttributes(String userId) throws SQLException {
+        List<String> attributes = new ArrayList<>();
+        String sql = "SELECT a.name FROM userAttributes ua " +
+                "JOIN allUserAttributes a ON ua.attrId = a.attrId " +
+                "WHERE ua.userId = ?";
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    attributes.add(rs.getString("name"));
+                }
+            }
+        }
+        return attributes;
+    }
+
+    /**
+     * Retrieves the tags for a user (from reviews)
+     * 
+     * @param userId
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
      * @return tags
      * @throws SQLException
      */
@@ -142,12 +185,18 @@ public class ProfileService {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String tag = rs.getString("tagName");
+<<<<<<< HEAD
                     String tagFull = TAG_MAP.getOrDefault(tag, tag);
                     tags.add(tag);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+=======
+                    tags.add(tag);
+                }
+            }
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
         }
 
         if (tags.isEmpty()) {
@@ -174,8 +223,12 @@ public class ProfileService {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getDouble(1);
+<<<<<<< HEAD
                 } else
                     return 0;
+=======
+                }
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
             }
         }
     }
@@ -185,6 +238,7 @@ public class ProfileService {
      * 
      * @return
      */
+<<<<<<< HEAD
     public List<ProfileReview> getReviews(String userId) throws SQLException {
         System.out.println("GETREVIEW: To be tested.");
         List<ProfileReview> reviews = new ArrayList<>();
@@ -222,4 +276,19 @@ public class ProfileService {
         System.out.println(reviews);
         return reviews;
     }
+=======
+    private List<Review> getReviews(String userId) {
+        /*
+         * we have the user's userId. we use this to find all the
+         * reviews written about them. then from those reviews, we take
+         * the content, reviewerId, and get the upvote count and downvote
+         * count.
+         * using the reviewerId, we get the profilepicture, firstname, and
+         * lastname
+         */
+        System.out.println("To be implemented.");
+        return null;
+    }
+
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
 }
