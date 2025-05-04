@@ -41,7 +41,7 @@ public class MatchesController {
         ModelAndView mv = new ModelAndView("matches");
         String userId = userService.getLoggedInUser().getUserId();
         ArrayList<MatchedUser> matches = matchService.getAllMatches(userId);
-        mv.addObject(matches);
+        mv.addObject("matches", matches);
         mv.addObject("errorMessage", error);
         System.out.println("Going to matches page...");
         return mv;

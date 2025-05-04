@@ -1,12 +1,14 @@
     <div class = "match">
         <div class="match_profile_pic">
-            <img th:src="@{${match.imagePath}}" alt="Profile Picture" />
+            <img class="match_profile_pic" src="{{imagePath}} alt="Profile Picture" />
         </div>
         <div class ="match_desc">
-            <div class="match_name" th:text="${match.firstName} + ' ' + ${match.lastName}">Name</div>
-            <div class="match_tags" th:text="${#strings.listJoin(match.tags, ', ')}">Tags</div>
+            <div class="match_name">{{username}} </div>
+            <div class="match_tags">
+                {{#tags}}
+                    <span class="tag">{{.}}</span>
+                {{/tags}}
+            </div>
         </div>
-        <div class="match_percent">
-            <h1 th:text="${#numbers.formatDecimal(match.percentage * 100, 0, 0)} + '%'">%</h1>
-        </div>
+        <div class="match_percent">{{percentageMatch}}%</div>
     </div>

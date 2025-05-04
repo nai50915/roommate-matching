@@ -60,7 +60,7 @@ public class MatchService {
                 if (isMatched(userId, potentialMatch)) {
                     List<String> tagsA = profileService.getTags(userId);
                     List<String> tagsB = profileService.getTags(potentialMatch);    
-                    double percentage = calculatePercentageMatch(tagsA, tagsB);
+                    double percentage = calculatePercentageMatch(tagsA, tagsB) * 100;
                     User user = profileService.getUser(potentialMatch);
                     MatchedUser matchedUser = new MatchedUser
                         (potentialMatch, user.username(), user.getFirstName(), user.getLastName(),
@@ -105,7 +105,7 @@ public class MatchService {
             matchBId = matchAId;
             matchAId = temp;
         }
-        
+
         try {
             if (isMatched(matchAId, matchBId)) {
                 System.out.println("Match already exists. Skipping insert.");

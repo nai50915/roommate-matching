@@ -16,7 +16,9 @@ public class MatchedUser extends User {
         this.percentageMatch = percentageMatch;
     }
 
-
+    public String getFormattedPercentage() {
+        return String.format("%.0f%%", percentageMatch * 100);
+    }
 
     public boolean isMatched() {
         return isMatched;
