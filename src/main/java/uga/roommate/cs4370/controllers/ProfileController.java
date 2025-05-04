@@ -19,9 +19,11 @@ import uga.roommate.cs4370.services.ProfileService;
 import uga.roommate.cs4370.services.AttributeService;
 import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.models.Attribute;
+import uga.roommate.cs4370.models.ProfileReview;
+import uga.roommate.cs4370.models.Rate;
 
 @Controller
-@RequestMapping("/profile")
+@RequestMapping("/Profile")
 public class ProfileController {
 
     // UserService has user login and registration related functions.
@@ -56,9 +58,17 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView("profile_page");
 
         User user = profileService.getUser(userId); // Replace this with real service call
+        double rating = profileService.getRating(userId);
+        Rate profileRating = new Rate(rating);
+        List<String> tags = profileService.getTags(userId);
+        List<ProfileReview> reviews = profileService.getReviews(userId);
 
         // Add user object to the model
         mv.addObject("user", user);
+        mv.addObject("tags", tags);
+        mv.addObject("rate", profileRating);
+        mv.addObject("reviews", reviews);
+
 
         // Optional error message
         // mv.addObject("errorMessage", error);
