@@ -79,21 +79,14 @@ create table if not exists userAttributes (
 );
 
 -- create the allUserAttributes table
-<<<<<<< HEAD
 create table if not exists allUserAttributes (
     attrId int auto_increment, 
     name varchar(200) not null unique, 
     category varchar(50), 
-=======
-Create table if not exists allUserAttributes (
-    attrId int auto_increment, 
-    name varchar(200) not null unique, 
->>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
     primary key (attrId)
 );
 -- Year in School
 INSERT INTO allUserAttributes (name) VALUES
-<<<<<<< HEAD
   ('freshman'),
   ('sophomore'),
   ('junior'),
@@ -166,66 +159,6 @@ UPDATE allUserAttributes SET category = 'spirituality' WHERE name IN ('religious
 UPDATE allUserAttributes SET category = 'dating' WHERE name IN ('has a partner', 'currently dating', 'single pringle', 'expect overnight guests');
 
 
-=======
-  ('Freshman'),
-  ('Sophomore'),
-  ('Junior'),
-  ('Senior'),
-  ('Graduate Student');
-
--- Studying Scopes / Majors
-INSERT INTO allUserAttributes (name) VALUES
-  ('Business Major'),
-  ('Science Major'),
-  ('Public Affairs Major'),
-  ('Medical Field'),
-  ('Engineering Major'),
-  ('Law Student');
-
--- Cleanliness Habits
-INSERT INTO allUserAttributes (name) VALUES
-  ('Does not mind a little mess'), 
-  ('Can be a little cluttered')
-  ('Cleanliness Obsessed');
-
--- Productivity / Schedule
-INSERT INTO allUserAttributes (name) VALUES
-  ('Early Bird'),
-  ('Night Owl'),
-  ('Needs Quiet Time to Focus');
-
--- Religion / Spirituality
-INSERT INTO allUserAttributes (name) VALUES
-  ('Religious'),
-  ('Not Religious'),
-  ('Muslim'),
-  ('Christian'),
-  ('Jewish'),
-  ('Polytheist');
-
--- Dating Habits
-INSERT INTO allUserAttributes (name) VALUES
-  ('Currently Dating'),
-  ('Expect Overnight Guests'),
-  ('Has a Partner');
-
--- Social Habits
-INSERT INTO allUserAttributes (name) VALUES
-  ('Drinks Alcohol'),
-  ('Smokes'),
-  ('Dry'), 
-  ('No Drinking or Smoking Tolerated')
-  ('Likes to Host');
-
--- Pets
-INSERT INTO allUserAttributes (name) VALUES
-  ('Has a Pet'),
-  ('Has a Cat'),
-  ('Has a Dog'),
-  ('Has Other Type of Pet'),
-  ('Plans to Get a Pet'),
-  ('No Pets Please');
->>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
 
 -- Create the match table
 create table if not exists matches (
