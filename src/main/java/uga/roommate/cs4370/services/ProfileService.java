@@ -11,12 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.ArrayList;
 
 import uga.roommate.cs4370.models.Review;
 import uga.roommate.cs4370.models.User;
-import uga.roommate.cs4370.models.ProfileReview;
 
 /**
  * This is a service class to assist in building the profile page.
@@ -37,25 +35,26 @@ public class ProfileService {
      * @param userId
      * @return
      */
-    public User getUser(String userId) throws SQLException {
+    public User getUser(String userId) {
         System.out.println("GETUSER: To be tested.");
         String sql = "SELECT username, firstName, lastName, description, imageUrl FROM user WHERE userId = ?";
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    String username = rs.getString("username");
-                    String firstName = rs.getString("firstName");
-                    String lastName = rs.getString("lastName");
-                    String bio = rs.getString("description");
-                    String imagePath = rs.getString("imageUrl");
-                    List<String> attributes = getAttributes(userId);
-                    List<String> tags = getTags(userId);
-                    User user = new User(userId, username, firstName, lastName, bio, imagePath, tags, attributes);
-                    return user;
-                }
-            }
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        String username = rs.getString("username");
+                        String firstName = rs.getString("firstName");
+                        String lastName = rs.getString("lastName");
+                        String bio = rs.getString("description");
+                        String imagePath = rs.getString("imageUrl");
+                        List<String> tags = getTags(userId);
+                        User user = new User(userId, username, firstName, lastName, bio, imagePath, tags);
+                        return user;
+                    }
+           }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         /*
          * We have the user's userId. we use this to get the
@@ -119,7 +118,7 @@ public class ProfileService {
      * @return tags
      * @throws SQLException
      */
-    public List<String> getTags(String userId) throws SQLException {
+    public List<String> getTags(String userId) {
         System.out.println("GETTAGS: To be tested.");
         List<String> tags = new ArrayList<>();
         String sql = "SELECT DISTINCT t.tagName " +
@@ -127,15 +126,17 @@ public class ProfileService {
                 "WHERE userId = ? AND u.userId = r.revieweeId AND " +
                 "r.reviewId = tg.reviewId AND tg.tagId = t.tagId";
         try (Connection conn = dataSource.getConnection();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, userId);
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    String tag = rs.getString("tagName");
-                    String tagFull = TAG_MAP.getOrDefault(tag, tag);
-                    tags.add(tagFull);
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        String tag = rs.getString("tagName");
+                        String tagFull = TAG_MAP.getOrDeafult(tag, tag);
+                        tags.add(tag);
+                    }
                 }
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         if (tags.isEmpty()) {
@@ -210,5 +211,4 @@ public class ProfileService {
         System.out.println(reviews);
         return reviews;
     }
-
 }
