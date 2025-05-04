@@ -21,7 +21,7 @@ import uga.roommate.cs4370.services.ReviewService;
 import uga.roommate.cs4370.services.UserService;
 
 /**
- * Handles /review URL
+ * Handles /Review URL
  */
 @Controller
 @RequestMapping("/Review")
@@ -37,13 +37,12 @@ public class ReviewController {
     }
 
     /**
-     * Serves /review page
+     * Serves /Review page
      */
     @GetMapping 
     public ModelAndView webpage (@RequestParam(name = "error", required = false) String error) {
         ModelAndView mv = new ModelAndView("review_page");
         mv.addObject("errorMessage", error);
-        System.out.println("Going to review page...");
         return mv;
     }
 
