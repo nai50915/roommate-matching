@@ -37,7 +37,7 @@ public class User {
     this.imagePath = getAvatarPath(userId);
     tags = new ArrayList<>();
   }
-
+ 
   public User (String userId, String username, String firstName, String lastName, String bio, String imagePath, List<String> tags) {
     this.userId = userId;
     this.username = username;
