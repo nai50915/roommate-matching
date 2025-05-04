@@ -105,6 +105,17 @@ public class MatchService {
             matchBId = matchAId;
             matchAId = temp;
         }
+        
+        try {
+            if (isMatched(matchAId, matchBId)) {
+                System.out.println("Match already exists. Skipping insert.");
+                return;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return; // Optional: skip insert if check fails
+        }
+    
 
         String sql = "INSERT INTO matches (userA, userB, tags_match) VALUES (?, ?, ?)";
         
