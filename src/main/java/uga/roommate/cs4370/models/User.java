@@ -8,90 +8,67 @@ import java.util.ArrayList;
  */
 
 public class User {
-
-  private final String userId;
-  private final String username;
-  private final String firstName;
-  private final String lastName;
-  private final String bio;
+  private String userId;
+  private String username;
+  private String firstName;
+  private String lastName;
+  private String bio;
   private String imagePath;
-  private final List<String> tags;
-  private final List<String> attributes;
+  private List<String> tags;
+  private List<Attribute> attributes;
 
-  public User(String userId, String username, String firstName, String lastName, String bio, String imagePath) {
+  public User(String userId, String username, String firstName, String lastName,
+      String bio, String imagePath,
+      List<String> tags, List<Attribute> attributes) {
     this.userId = userId;
     this.username = username;
     this.firstName = firstName;
     this.lastName = lastName;
     this.bio = bio;
     this.imagePath = imagePath;
-    tags = new ArrayList<>();
-    attributes = new ArrayList<>();
+    this.tags = (tags != null) ? tags : new ArrayList<>();
+    this.attributes = (attributes != null) ? attributes : new ArrayList<>();
   }
 
-  // Temporary constructor
-  public User(String userId, String firstName, String lastName) {
-    this.userId = userId;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.username = "";
-    this.bio = "Hi! I just joined Rate my Roommate";
-    this.imagePath = getAvatarPath(userId);
-    tags = new ArrayList<>();
-    attributes = new ArrayList<>();
-  }
-
-  public User(String userId, String username, String firstName, String lastName, String bio, String imagePath,
-      List<String> tags, List<String> attributes) {
-    this.userId = userId;
-    this.username = username;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.bio = bio;
-    this.imagePath = imagePath;
-    this.tags = tags;
-    this.attributes = attributes;
-  }
-
-  public User(String userId, String username, String firstName, String lastName, String bio, String imagePath,
-  ArrayList<String> tags) {
-    this.userId = userId;
-    this.username = username;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.bio = bio;
-    this.imagePath = imagePath;
-    this.tags = tags;
-    this.attributes = new ArrayList<>();
-  }
-
-  
-
-
-  private static String getAvatarPath(String userId) {
-    int fileNo = (userId.hashCode() % 20) + 1;
-    String avatarFileName = String.format("avatar_%d.png", fileNo);
-    return "/avatars/" + avatarFileName;
-  }
-
+  // Getters and Setters
   public String getUserId() {
     return userId;
   }
 
-  public String username() {
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
+
+  public String getUsername() {
     return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public String getFirstName() {
     return firstName;
   }
 
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
   public String getLastName() {
     return lastName;
   }
 
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
+
   public String getBio() {
     return bio;
+  }
+
+  public void setBio(String bio) {
+    this.bio = bio;
   }
 
   public String getImagePath() {
@@ -106,8 +83,15 @@ public class User {
     return tags;
   }
 
-  public List<String> getAttributes() {
+  public void setTags(List<String> tags) {
+    this.tags = (tags != null) ? tags : new ArrayList<>();
+  }
+
+  public List<Attribute> getAttributes() {
     return attributes;
   }
 
+  public void setAttributes(List<Attribute> attributes) {
+    this.attributes = (attributes != null) ? attributes : new ArrayList<>();
+  }
 }

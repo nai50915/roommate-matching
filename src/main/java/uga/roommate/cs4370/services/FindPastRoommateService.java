@@ -9,7 +9,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uga.roommate.cs4370.models.User;
@@ -21,7 +20,8 @@ public class FindPastRoommateService {
     private final ProfileService profileService;
 
     @Autowired
-    public FindPastRoommateService(DataSource dataSource, PastRoommateService pastRoommateService, ProfileService profileService) {
+    public FindPastRoommateService(DataSource dataSource, PastRoommateService pastRoommateService,
+            ProfileService profileService) {
         this.profileService = profileService;
         this.pastRoommateService = pastRoommateService;
         this.dataSource = dataSource;
@@ -30,15 +30,15 @@ public class FindPastRoommateService {
     public List<User> getAllUsersExcept(String userId) throws SQLException {
         List<User> allUsers = new ArrayList<>();
         String sql = "SELECT * FROM user " +
-             "WHERE userId != ? " +
-             "AND userId NOT IN ( " +
-             "    SELECT userB FROM pastRoommate WHERE userA = ? " +
-             "    UNION " +
-             "    SELECT userA FROM pastRoommate WHERE userB = ? " +
-             ")";
+                "WHERE userId != ? " +
+                "AND userId NOT IN ( " +
+                "    SELECT userB FROM pastRoommate WHERE userA = ? " +
+                "    UNION " +
+                "    SELECT userA FROM pastRoommate WHERE userB = ? " +
+                ")";
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, userId);
             stmt.setString(2, userId);
             stmt.setString(3, userId);
@@ -48,24 +48,12 @@ public class FindPastRoommateService {
                     String firstName = rs.getString("firstName");
                     String lastName = rs.getString("lastName");
                     String userIdStr = rs.getString("userId");
-                    String imagePath = rs.getString("imageUrl");
-                    ArrayList<String> tags = profileService.getTags(userIdStr);
-                    for (int i = 0; i < tags.size(); i++) {
-                        System.out.println("tags: " + tags.get(i));
-                    }
-
-                    
-                    System.out.println("imagePath: " + imagePath);
-                   
-                    User user = new User(userIdStr, firstName, lastName);
                     // String username = rs.getString("username");
-                    //     String firstName = rs.getString("firstName");
-                    //     String lastName = rs.getString("lastName");
-                    //     String bio = rs.getString("description");
-                    //     String imagePath = rs.getString("imagePath");
-                    //     String userIdrs = rs.getString("userId");
-                    //     ArrayList<String> tags = profileService.getTags(userIdrs);
-                    //     User user = new User(userId, username, firstName, lastName, bio, imagePath, tags);
+                    // String bio = rs.getString("bio");
+                    // String imagePath = rs.getString("imagePath");
+                    // List<String> tags = new ArrayList<>();
+                    // String tagsStr = rs.getString("tags");
+                    User user = new User(userIdStr, null, firstName, lastName, null, null, null, null);
 
                     allUsers.add(user);
                 }
@@ -74,8 +62,8 @@ public class FindPastRoommateService {
         return allUsers;
     }
 
-     // Add method to add a past roommate
-     public void addPastRoommate(int currentUserId, int newRoommateId) throws SQLException {
+    // Add method to add a past roommate
+    public void addPastRoommate(int currentUserId, int newRoommateId) throws SQLException {
         System.out.println("Adding past roommate: " + currentUserId + " witth " + newRoommateId);
         pastRoommateService.addPastRoommate(currentUserId, newRoommateId); // Call the method in PastRoommateService
     }

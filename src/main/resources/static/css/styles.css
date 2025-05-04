@@ -252,19 +252,3 @@ nav a:hover {
 .link {
     margin-left: 16pt;
 }
-
-.attr-chip-container {
-    margin-top: 8pt;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6pt;
-}
-
-.attr-chip {
-    background-color: #e6f3ff;
-    border: 1px solid #1da1f2;
-    color: #1a1a1a;
-    padding: 6pt 12pt;
-    border-radius: 16pt;
-    font-size: 12pt;
-}

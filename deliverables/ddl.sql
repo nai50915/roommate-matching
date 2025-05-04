@@ -82,68 +82,83 @@ create table if not exists userAttributes (
 Create table if not exists allUserAttributes (
     attrId int auto_increment, 
     name varchar(200) not null unique, 
+    category varchar(50), 
     primary key (attrId)
 );
 -- Year in School
 INSERT INTO allUserAttributes (name) VALUES
-  ('Freshman'),
-  ('Sophomore'),
-  ('Junior'),
-  ('Senior'),
-  ('Graduate Student');
+  ('freshman'),
+  ('sophomore'),
+  ('junior'),
+  ('senior'),
+  ('graduate');
 
 -- Studying Scopes / Majors
 INSERT INTO allUserAttributes (name) VALUES
-  ('Business Major'),
-  ('Science Major'),
-  ('Public Affairs Major'),
-  ('Medical Field'),
-  ('Engineering Major'),
-  ('Law Student');
+  ('business'),
+  ('science'),
+  ('public affairs'),
+  ('medicine'),
+  ('engineering'),
+  ('education'),
+  ('other'),
+  ('law');
 
 -- Cleanliness Habits
 INSERT INTO allUserAttributes (name) VALUES
-  ('Does not mind a little mess'), 
-  ('Can be a little cluttered')
-  ('Cleanliness Obsessed');
+  ('does not mind mess'), 
+  ('can be a little cluttered')
+  ('cleanliness obsessed');
 
 -- Productivity / Schedule
 INSERT INTO allUserAttributes (name) VALUES
-  ('Early Bird'),
-  ('Night Owl'),
-  ('Needs Quiet Time to Focus');
+  ('early bird'),
+  ('night owl'),
+  ('needs quiet time to focus');
 
 -- Religion / Spirituality
 INSERT INTO allUserAttributes (name) VALUES
-  ('Religious'),
-  ('Not Religious'),
-  ('Muslim'),
-  ('Christian'),
-  ('Jewish'),
-  ('Polytheist');
+  ('religious'),
+  ('not religious'),
+  ('muslim'),
+  ('christian'),
+  ('jewish'),
+  ('polytheist');
 
 -- Dating Habits
 INSERT INTO allUserAttributes (name) VALUES
-  ('Currently Dating'),
-  ('Expect Overnight Guests'),
-  ('Has a Partner');
+  ('currently dating'),
+  ('expect overnight guests'),
+  ('single pringle'),
+  ('has a partner');
 
 -- Social Habits
 INSERT INTO allUserAttributes (name) VALUES
-  ('Drinks Alcohol'),
-  ('Smokes'),
-  ('Dry'), 
-  ('No Drinking or Smoking Tolerated')
-  ('Likes to Host');
+  ('drinks'),
+  ('smokes'),
+  ('dry'), 
+  ('no drinking or smoking tolerated')
+  ('likes to host');
 
 -- Pets
 INSERT INTO allUserAttributes (name) VALUES
-  ('Has a Pet'),
-  ('Has a Cat'),
-  ('Has a Dog'),
-  ('Has Other Type of Pet'),
-  ('Plans to Get a Pet'),
-  ('No Pets Please');
+  ('has a pet'),
+  ('has a cat'),
+  ('has a dog'),
+  ('plans to get a pet'),
+  ('no pets please');
+
+-- setting categories for each description 
+UPDATE allUserAttributes SET category = 'year' WHERE name IN ('freshman', 'sophomore', 'junior', 'senior', 'graduate');
+UPDATE allUserAttributes SET category = 'studying' WHERE name IN ('business', 'science', 'public affairs', 'education', 'engineering', 'law','medicine', 'other');
+UPDATE allUserAttributes SET category = 'pets' WHERE name IN ('has a pet', 'no pets please', 'has a dog', 'has a cat', 'plans to get a pet');
+UPDATE allUserAttributes SET category = 'cleanliness' WHERE name IN ('cleanliness obsessed', 'does not mind mess', 'can be a little cluttered');
+UPDATE allUserAttributes SET category = 'social' WHERE name IN ('drinks', 'smokes', 'dry', 'no drinking or smoking tolerated', 'likes to host');
+UPDATE allUserAttributes SET category = 'productivity' WHERE name IN ('early bird', 'night owl', 'needs quiet time to focus');
+UPDATE allUserAttributes SET category = 'spirituality' WHERE name IN ('religious', 'not religious', 'christian', 'muslim', 'jewish', 'polytheist');
+UPDATE allUserAttributes SET category = 'dating' WHERE name IN ('has a partner', 'currently dating', 'single pringle', 'expect overnight guests');
+
+
 
 -- Create the match table
 create table if not exists matches (

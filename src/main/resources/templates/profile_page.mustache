@@ -8,6 +8,7 @@
 </head>
 <body>
     {{> fragments/error_message}}
+
     <div class="profile_nav">
         <nav>
             <ul>
@@ -21,52 +22,66 @@
             </ul>
         </nav>
     </div>
+
     <div class="profile">
-    <div class="profile_info">
-        <div class="profile_img">
-            <img class="profile_img_link" src="{{user.imagePath}}" alt="Profile Image">
-        </div>
-        <div class="profile_content">
-            <div class="profile_owner">
-                <div class="profile_name">{{user.firstName}} {{user.lastName}}</div>
-                <div class="profile_rate">
-                    <h2>{{rate.rating}}/5</h2>
+        <div class="profile_info">
+            <div class="profile_img">
+                <img class="profile_img_link" src="{{user.imagePath}}" alt="Profile Image">
+            </div>
+
+            <div class="profile_content">
+                <div class="profile_owner">
+                    <div class="profile_name">{{user.firstName}} {{user.lastName}}</div>
+                    <div class="profile_rate">
+                        <h2>5/5</h2> 
+                    </div>
+                </div>
+
+                <div class="profile_desc">{{user.bio}}</div>
+
+                <div class="profile_attrs">
+                    <strong>{{user.firstName}}'s Attributes:</strong>
+                    <div class="attr-chip-container">
+                    {{#user.attributes}}
+                        <span class="attr-chip {{category}}">{{name}}</span>
+                    {{/user.attributes}}
+                    {{^user.attributes}}
+                    <span>No attributes listed</span>
+                    {{/user.attributes}}
+                    </div>
+                    {{#isOwnProfile}}
+                    <div class="profile_actions">
+                        <a href="/profile/attributes" class="action-button">Edit Attributes</a>
+                    </div>
+                    {{/isOwnProfile}}
+                </div>
+
+                <div class="profile_tags">Tags</div>
+                <div class="profile_tags">
+                    {{#tags}}
+                        {{> fragments/profile_tag}}
+                    {{/tags}}
+
+                    {{^tags}}
+                        <span>No tags listed</span>
+                    {{/tags}}
                 </div>
             </div>
-            <div class="profile_desc">{{user.bio}}</div>
-            <div class="profile_attrs">
-            <strong>{{user.firstName}}'s Attributes:</strong>
-    <div class="attr-chip-container">
-        {{#user.attributes}}
-            <span class="attr-chip">{{.}}</span>
-        {{/user.attributes}}
-        {{^user.attributes}}
-            <span>No attributes listed</span>
-        {{/user.attributes}}
-    </div>
-
-    {{#isOwnProfile}}
-    <div class="profile_actions">
-        <a href="/profile/attributes" class="action-button">Edit Attributes</a>
-    </div>
-    {{/isOwnProfile}}
-</div>
-
-            <div class="profile_tags">Tags</div>
-            <div class="profile_tags">
-                {{#tags}}
-                    {{> fragments/profile_tag}}
-                {{/tags}}
-            </div>
         </div>
     </div>
-    </div>
+
     <div class="profile_divider">
         <h1>Reviews for {{user.firstName}}</h1>
     </div>
+
     <div class="profile_reviews"> 
         {{#reviews}}
             {{> fragments/profile_review}}
         {{/reviews}}
+
+        {{^reviews}}
+            <p>No reviews yet!</p>
+        {{/reviews}}
     </div>
 </body>
+</html>

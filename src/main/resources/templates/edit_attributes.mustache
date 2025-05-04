@@ -1,11 +1,21 @@
+<h2>Edit Your Attributes</h2>
+
 <form method="post" action="/profile/attributes">
     {{#allAttributes}}
-        <input type="checkbox" 
-               name="attributes" 
-               value="{{attrId}}" 
-               id="attr_{{attrId}}" 
-               {{#selected}}checked{{/selected}}>
-        <label for="attr_{{attrId}}">{{name}}</label><br>
+        <div>
+            <input type="checkbox" 
+                   name="attributes" 
+                   value="{{attrId}}" 
+                   id="attr_{{attrId}}"
+                   {{#selected}}checked{{/selected}}>
+            <label for="attr_{{attrId}}">{{name}}</label>
+        </div>
     {{/allAttributes}}
-    <button type="submit">Save</button>
+
+    {{^allAttributes}}
+        <p>No attributes available to select.</p>
+    {{/allAttributes}}
+
+    <br>
+    <button type="submit">Save Attributes</button>
 </form>

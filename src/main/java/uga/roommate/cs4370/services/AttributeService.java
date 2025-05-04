@@ -21,14 +21,15 @@ public class AttributeService {
     // Get all available attributes
     public List<Attribute> getAllAttributes() throws SQLException {
         List<Attribute> attributes = new ArrayList<>();
-        String sql = "SELECT attrId, name FROM allUserAttributes";
+        String sql = "SELECT attrId, name, category FROM allUserAttributes";
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 attributes.add(new Attribute(
                         rs.getInt("attrId"),
-                        rs.getString("name")));
+                        rs.getString("name"),
+                        rs.getString("category")));
             }
         }
         return attributes;
@@ -73,18 +74,18 @@ public class AttributeService {
                 }
             }
 
-            conn.commit(); // ✅ commit the changes
+            conn.commit();
         }
     }
 
     public List<Attribute> getAllAttributesWithSelection(String userId) throws SQLException {
         List<Integer> selectedIds = getUserAttributeIds(userId);
-        List<Attribute> allAttrs = getAllAttributes();
+        List<Attribute> all = getAllAttributes();
 
-        for (Attribute attr : allAttrs) {
+        for (Attribute attr : all) {
             attr.setSelected(selectedIds.contains(attr.getAttrId()));
         }
 
-        return allAttrs;
+        return all;
     }
 }

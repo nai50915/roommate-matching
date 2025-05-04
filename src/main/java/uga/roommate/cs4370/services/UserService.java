@@ -73,7 +73,7 @@ public class UserService {
                         String lastName = rs.getString("lastName");
 
                         // Initialize and retain the logged in user.
-                        loggedInUser = new User(userId, firstName, lastName);
+                        loggedInUser = new User(userId, null, firstName, lastName, null, null, null, null);
                     }
                     return isPassMatch;
                 }
@@ -87,7 +87,6 @@ public class UserService {
      */
     public void unAuthenticate() {
         loggedInUser = null;
-        System.out.println("Logged In User has been logged out = " + loggedInUser);
     }
 
     /**
@@ -133,35 +132,33 @@ public class UserService {
         }
     }
 
-
     public User findByFirstAndLastName(String firstName, String lastName) {
         String sql = "SELECT * FROM user WHERE firstName = ? AND lastName = ?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-    
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, firstName);
             stmt.setString(2, lastName);
-    
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                        String userId = rs.getString("userId");
-                        String username = rs.getString("username");
-                        String firstNameFound = rs.getString("firstName");
-                        String lastNameFound = rs.getString("lastName");
-                        String bio = rs.getString("description");
-                        String imagePath = rs.getString("imageUrl");
-                        // List<String> tags = getTags(userId);
-                        User user = new User(userId, username, firstNameFound, lastNameFound, bio, imagePath, null);
-                        return user;
+                    String userId = rs.getString("userId");
+                    String username = rs.getString("username");
+                    String firstNameFound = rs.getString("firstName");
+                    String lastNameFound = rs.getString("lastName");
+                    String bio = rs.getString("description");
+                    String imagePath = rs.getString("imageUrl");
+                    // List<String> tags = getTags(userId);
+                    User user = new User(userId, username, firstNameFound, lastNameFound, bio, imagePath, null, null);
+                    return user;
                 } else {
                     return null; // No user found
                 }
             }
-    
+
         } catch (SQLException e) {
             throw new RuntimeException("Error finding user", e);
         }
     }
-    
 
 }

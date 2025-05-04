@@ -1,7 +1,5 @@
 package uga.roommate.cs4370.controllers;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -14,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import uga.roommate.cs4370.services.UserService;
-import uga.roommate.cs4370.services.ProfileService;
+import uga.roommate.cs4370.models.Attribute;
+import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.services.AttributeService;
 import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.models.Attribute;
@@ -45,11 +43,18 @@ public class ProfileController {
 
     @GetMapping
     public ModelAndView profileOfLoggedInUser() throws SQLException {
-        System.out.println("User is attempting to view profile of the logged in user.");
         String userId = userService.getLoggedInUser().getUserId();
-        ModelAndView mv = profileOfSpecificUser(userId);
-        mv.addObject("isOwnProfile", true);
-        return mv;
+        System.out.println("Logged-in userId: " + userId);
+
+        try {
+            ModelAndView mv = profileOfSpecificUser(userId);
+            mv.addObject("isOwnProfile", true);
+            return mv;
+        } catch (SQLException e) {
+            System.err.println("Failed to load profile for userId: " + userId);
+            e.printStackTrace();
+            return new ModelAndView("error_message").addObject("errorMessage", "User profile not found.");
+        }
     }
 
     @GetMapping("/{userId}")
@@ -69,7 +74,6 @@ public class ProfileController {
         mv.addObject("rate", profileRating);
         mv.addObject("reviews", reviews);
 
-
         // Optional error message
         // mv.addObject("errorMessage", error);
         boolean isOwn = userService.getLoggedInUser().getUserId().equals(userId);
@@ -81,12 +85,10 @@ public class ProfileController {
     public ModelAndView showAttributeEditor() throws SQLException {
         String userId = userService.getLoggedInUser().getUserId();
         List<Attribute> allAttrs = attributeService.getAllAttributesWithSelection(userId);
-        List<Integer> selected = attributeService.getUserAttributeIds(userId);
         User user = profileService.getUser(userId);
 
         ModelAndView mv = new ModelAndView("edit_attributes");
         mv.addObject("allAttributes", allAttrs);
-        mv.addObject("selectedAttributeIds", selected);
         mv.addObject("user", user);
         return mv;
     }

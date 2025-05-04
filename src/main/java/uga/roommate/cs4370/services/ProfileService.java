@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import uga.roommate.cs4370.models.ProfileReview;
 import uga.roommate.cs4370.models.Review;
 import uga.roommate.cs4370.models.User;
+import uga.roommate.cs4370.models.ProfileReview;
+import uga.roommate.cs4370.models.Attribute;
 
 /**
  * This is a service class to assist in building the profile page.
@@ -37,27 +39,35 @@ public class ProfileService {
      * @param userId
      * @return
      */
-    public User getUser(String userId) {
-        System.out.println("GETUSER: To be tested.");
-        String sql = "SELECT username, firstName, lastName, description, imageUrl FROM user WHERE userId = ?";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, userId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        String username = rs.getString("username");
-                        String firstName = rs.getString("firstName");
-                        String lastName = rs.getString("lastName");
-                        String bio = rs.getString("description");
-                        String imagePath = rs.getString("imageUrl");
-                        ArrayList<String> tags = getTags(userId);
-                        User user = new User(userId, username, firstName, lastName, bio, imagePath, tags);
-                        return user;
-                    }  
+    public User getUser(String userId) throws SQLException {
+        System.out.println("GETUSER: Attempting to fetch user with ID: " + userId);
 
-           }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        String sql = "SELECT username, firstName, lastName, description, imageUrl FROM user WHERE userId = ?";
+
+        try (Connection conn = dataSource.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    String username = rs.getString("username");
+                    String firstName = rs.getString("firstName");
+                    String lastName = rs.getString("lastName");
+                    String bio = rs.getString("description");
+                    String imagePath = rs.getString("imageUrl");
+
+                    List<Attribute> attributes = getAttributes(userId);
+                    ArrayList<String> tags = getTags(userId);
+
+                    User user = new User(userId, username, firstName, lastName, bio, imagePath, tags, attributes);
+                    System.out.println("GETUSER: Successfully created User object: " + username);
+                    return user;
+                } else {
+                    System.err.println("GETUSER ERROR: No user found with ID: " + userId);
+                    throw new SQLException("No user found for userId: " + userId);
+                }
+            }
         }
         /*
          * We have the user's userId. we use this to get the
@@ -65,7 +75,6 @@ public class ProfileService {
          * we also need to calculate the overall rating of the user.
          * (done in a helper function)
          */
-        return null;
     }
 
     private static final Map<String, String> TAG_MAP = Map.of(
@@ -86,20 +95,30 @@ public class ProfileService {
      * @return attributes
      * @throws SQLException
      */
-    private List<String> getAttributes(String userId) throws SQLException {
-        List<String> attributes = new ArrayList<>();
-        String sql = "SELECT a.name FROM userAttributes ua " +
+    public List<Attribute> getAttributes(String userId) throws SQLException {
+        List<Attribute> attributes = new ArrayList<>();
+
+        String sql = "SELECT a.attrId, a.name, a.category " +
+                "FROM userAttributes ua " +
                 "JOIN allUserAttributes a ON ua.attrId = a.attrId " +
                 "WHERE ua.userId = ?";
+
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
+
             ps.setString(1, userId);
+
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    attributes.add(rs.getString("name"));
+                    Attribute attr = new Attribute(
+                            rs.getInt("attrId"),
+                            rs.getString("name"),
+                            rs.getString("category"));
+                    attributes.add(attr);
                 }
             }
         }
+
         return attributes;
     }
 
@@ -118,15 +137,15 @@ public class ProfileService {
                 "WHERE userId = ? AND u.userId = r.revieweeId AND " +
                 "r.reviewId = tg.reviewId AND tg.tagId = t.tagId";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, userId);
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        String tag = rs.getString("tagName");
-                        String tagFull = TAG_MAP.getOrDefault(tag, tag);
-                        tags.add(tag);
-                    }
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String tag = rs.getString("tagName");
+                    String tagFull = TAG_MAP.getOrDefault(tag, tag);
+                    tags.add(tag);
                 }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
