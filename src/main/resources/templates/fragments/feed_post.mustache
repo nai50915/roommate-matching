@@ -9,7 +9,7 @@
             </div>
             <div class="feed_interaction">
 
-                <form method="POST" action="/like" class="interaction_form">
+                <form method="POST" action="/Feed/Vote/{{reviewId}}/true/true" class="interaction_form">
                     <input type="hidden" name="feed_id" value="{{reviewId}}">
                     <button type="submit" class="feed_likes"></button>
                 </form>
@@ -17,7 +17,7 @@
                 <div>{{upvoteCount}}</div>
                 <div>{{downvoteCount}}</div>
                   
-                <form method="POST" action="/dislike" class="interaction_form">
+                <form method="POST" action="/Feed/Vote/{{reviewId}}/true/false" class="interaction_form">
                     <input type="hidden" name="feed_id" value="{{reviewId}}">
                     <button type="submit" class="feed_dislikes"></button>
                 </form>
