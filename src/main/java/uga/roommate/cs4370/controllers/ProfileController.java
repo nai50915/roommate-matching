@@ -17,6 +17,7 @@ import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.services.AttributeService;
 import uga.roommate.cs4370.services.UserService;
 import uga.roommate.cs4370.services.ProfileService;
+import uga.roommate.cs4370.services.VoteService;
 import uga.roommate.cs4370.models.ProfileReview;
 import uga.roommate.cs4370.models.Rate;
 
@@ -28,6 +29,7 @@ public class ProfileController {
     private final UserService userService;
     private final ProfileService profileService;
     private final AttributeService attributeService;
+    private final VoteService voteService;
 
     /**
      * See notes in AuthInterceptor.java regarding how this works
@@ -35,10 +37,11 @@ public class ProfileController {
      */
     @Autowired
     public ProfileController(UserService userService, ProfileService profileService,
-            AttributeService attributeService) {
+            AttributeService attributeService, VoteService voteService) {
         this.userService = userService;
         this.profileService = profileService;
         this.attributeService = attributeService;
+        this.voteService = voteService;
     }
 
     @GetMapping
@@ -94,4 +97,25 @@ public class ProfileController {
         return "redirect:/Profile";
     }
 
+    @RequestMapping("/Vote/{reviewId}/{isAdd}/{isUpVote}")
+    public String vote(@PathVariable("reviewId") String reviewId,
+        @PathVariable("isAdd") Boolean isAdd,
+        @PathVariable("isUpVote") Boolean isUpVote) {
+        System.out.println("User attempts to vote on: " + reviewId);
+        String userId = userService.getLoggedInUser().getUserId();
+        try {
+            if (isAdd) {
+                if (isUpVote) {
+                    voteService.upvotePost(userId, reviewId);
+                } else {
+                    voteService.downvotePost(userId, reviewId);
+                }
+            } else {
+                voteService.removeVote(userId, reviewId);
+            }
+            return "redirect:/Profile";
+        } catch (Exception e) {
+            return "redirect:/Profile";         
+        }
+    }
 }
