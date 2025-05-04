@@ -11,8 +11,8 @@ public class MatchedUser extends User {
     private final double percentageMatch;
 
     public MatchedUser(String userId, String username, String firstName, String lastName, String bio, String imagePath,
-            boolean isMatched, double percentageMatch) {
-        super(userId, username, firstName, lastName, bio, imagePath, null, null);
+            List<String> tags, List<Attribute> attrs, boolean isMatched, double percentageMatch) {
+        super(userId, username, firstName, lastName, bio, imagePath, tags, attrs);
         this.isMatched = isMatched;
         this.percentageMatch = percentageMatch;
     }
