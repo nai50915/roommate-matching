@@ -15,12 +15,45 @@ import uga.roommate.cs4370.services.PastRoommateService;
 import uga.roommate.cs4370.services.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("/Your-Past-Roommate")
-public class PastRoommateController {
+// @Controller
+// @RequestMapping("/Your-Past-Roommate")
+// public class PastRoommateController {
 
-    private final PastRoommateService pastRoommateService;
-    private final UserService userService;
+//     private final PastRoommateService pastRoommateService;
+//     private final UserService userService;
+
+//     @Autowired
+//     public PastRoommateController(PastRoommateService pastRoommateService, UserService userService) {
+//         this.pastRoommateService = pastRoommateService;
+//         this.userService = userService;
+//     }
+
+//     @GetMapping
+// public ModelAndView viewPastRoommates(@RequestParam(required = false) String error) {
+//     ModelAndView mav = new ModelAndView("past_roommates_page"); 
+//     try {
+//         String userId = userService.getLoggedInUser().getUserId();
+//         List<User> pastRoommates = pastRoommateService.getPastRoommates(userId);
+//         mav.addObject("pastRoommates", pastRoommates);
+//         mav.addObject("userId", userId);
+//     } catch (SQLException e) {
+//         mav.addObject("error", "Failed to load past roommates.");
+//     }
+
+//     if (error != null) {
+//         mav.addObject("error", error);
+//     }
+
+//     return mav;
+// }
+
+@Controller
+public class PastRoommateController {
+   
+    private PastRoommateService pastRoommateService;
+    
+   
+    private UserService userService;
 
     @Autowired
     public PastRoommateController(PastRoommateService pastRoommateService, UserService userService) {
@@ -28,24 +61,24 @@ public class PastRoommateController {
         this.userService = userService;
     }
 
-    @GetMapping
-public ModelAndView viewPastRoommates(@RequestParam(required = false) String error) {
-    ModelAndView mav = new ModelAndView("past_roommates_page"); 
-    try {
-        String userId = userService.getLoggedInUser().getUserId();
-        List<User> pastRoommates = pastRoommateService.getPastRoommates(userId);
-        mav.addObject("pastRoommates", pastRoommates);
-        mav.addObject("userId", userId);
-    } catch (SQLException e) {
-        mav.addObject("error", "Failed to load past roommates.");
+    @GetMapping("/Your-Past-Roommate")
+    public ModelAndView showPastRoommates() {
+        ModelAndView mv = new ModelAndView("past_roommates_page");
+        try {
+            String currentUserId = userService.getLoggedInUser().getUserId();
+            List<User> pastRoommates = pastRoommateService.getPastRoommates(currentUserId);
+            System.out.println("Past Roommates: " + pastRoommates.size());
+            for (int i = 0; i < pastRoommates.size(); i++) {
+                System.out.println("Past Roommate " + i + ": " + pastRoommates.get(i).getFirstName());
+            }
+            mv.addObject("pastRoommates", pastRoommates);
+        } catch (SQLException e) {
+            mv.addObject("error", "Could not load past roommates.");
+        }
+        return mv;
     }
-
-    if (error != null) {
-        mav.addObject("error", error);
-    }
-
-    return mav;
 }
+
 
 
 
@@ -68,5 +101,5 @@ public ModelAndView viewPastRoommates(@RequestParam(required = false) String err
     //     }
     //     return "redirect:/Your-Past-Roommate?userId=" + currentUserId;
     // }
-}
+
 
