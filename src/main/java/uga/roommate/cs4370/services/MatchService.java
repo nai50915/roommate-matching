@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import uga.roommate.cs4370.services.ProfileService;
 
 import uga.roommate.cs4370.models.User;
+import uga.roommate.cs4370.models.Attribute;
 import uga.roommate.cs4370.models.MatchedUser;
 
 /**
@@ -62,9 +63,9 @@ public class MatchService {
                     List<String> tagsB = profileService.getTags(potentialMatch);
                     double percentage = calculatePercentageMatch(tagsA, tagsB) * 100;
                     User user = profileService.getUser(potentialMatch);
-                    MatchedUser matchedUser = new MatchedUser(potentialMatch, user.username(), user.getFirstName(),
-                            user.getLastName(),
-                            user.getBio(), user.getImagePath(), tagsB, true, percentage);
+                    ArrayList<Attribute> attrs = new ArrayList<>();
+                    MatchedUser matchedUser = new MatchedUser(potentialMatch, user.getUsername(), user.getFirstName(),
+                            user.getLastName(), user.getBio(), user.getImagePath(), tagsB, attrs, true, percentage);
                     matches.add(matchedUser);
                 }
             } catch (SQLException e) {

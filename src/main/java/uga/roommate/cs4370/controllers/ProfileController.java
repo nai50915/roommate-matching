@@ -21,7 +21,7 @@ import uga.roommate.cs4370.models.ProfileReview;
 import uga.roommate.cs4370.models.Rate;
 
 @Controller
-@RequestMapping("/profile")
+@RequestMapping("/Profile")
 public class ProfileController {
 
     // UserService has user login and registration related functions.
