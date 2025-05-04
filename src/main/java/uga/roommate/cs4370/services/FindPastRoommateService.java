@@ -53,6 +53,7 @@ public class FindPastRoommateService {
                     // String imagePath = rs.getString("imagePath");
                     // List<String> tags = new ArrayList<>();
                     // String tagsStr = rs.getString("tags");
+                    
                     User user = new User(userIdStr, null, firstName, lastName, null, null, null, null);
 
                     allUsers.add(user);
