@@ -23,6 +23,10 @@ import java.sql.ResultSet;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+/**
+ * This is a service class to assist in building the review page.
+ * This class interacts with the database through a dataSource instance.
+ */
 @Service
 public class ReviewService {
     private final DataSource dataSource;
@@ -37,7 +41,14 @@ public class ReviewService {
     }
     
     /**
-     * Create a new review in the database
+     * Create review in database
+     * 
+     * @param reviewerId reviewer
+     * @param revieweeId reviewee
+     * @param content content of review
+     * @param ratingValue rating, 1-5
+     * @param selectedTags tags for reviewee by reviewer
+     * @return true if created successfully, false if not 
      */
     public boolean createReview(int reviewerId, int revieweeId, String content, int ratingValue, List<String> selectedTags) {
         Connection conn = null;
@@ -157,11 +168,6 @@ public class ReviewService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        /*
-        for this, we need to make sure we account for the loggedInUser to see if
-        they have voted on a review 
-        */
-        // System.out.println("To be implemented.");
         return reviews;
     }
 

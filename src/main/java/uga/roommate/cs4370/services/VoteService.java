@@ -27,9 +27,8 @@ public class VoteService {
 
   /**
    * Upvotes a post 
-   * @throws SQLException
    */
-  public void upvotePost (String userId, String reviewId) throws SQLException {
+  public void upvotePost (String userId, String reviewId) {
     /*
     before inserting into the vote table, check if the user previously
     downvoted that post. if so, delete that (call removevote) then insert the upvote 
@@ -46,6 +45,8 @@ public class VoteService {
           ps.setString(1, userId);
           ps.setString(2, reviewId);
           ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
     System.out.println("To be tested.");
   }
@@ -53,9 +54,8 @@ public class VoteService {
 
   /**
    * Downvotes a post 
-   * @throws SQLException
    */
-  public void downvotePost(String userId, String reviewId) throws SQLException {
+  public void downvotePost(String userId, String reviewId) {
     String hasVoted = hasVoted(userId, reviewId);
     /*
     before inserting into the vote table, check if the user previously
@@ -72,21 +72,24 @@ public class VoteService {
           ps.setString(1, userId);
           ps.setString(2, reviewId);
           ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
     System.out.println("To be tested.");
   }
 
   /**
    * Removes a user's vote for a post 
-   * @throws SQLException
    */
-  public void removeVote(String userId, String reviewId) throws SQLException {
+  public void removeVote(String userId, String reviewId) {
     String sql = "DELETE FROM vote WHERE userId = ? AND reviewId = ?";
     try (Connection conn = dataSource.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql)) {
           ps.setString(1, userId);
           ps.setString(2, reviewId);
           ps.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
     System.out.println("To be tested.");
   }
@@ -94,9 +97,8 @@ public class VoteService {
   /**
    * Checks if a user has voted on a post 
    * @return "upvote", "downvote" or null if no vote exists 
-   * @throws SQLException
    */
-  public String hasVoted (String userId, String reviewId) throws SQLException {
+  public String hasVoted (String userId, String reviewId) {
     String sql = "SELECT type FROM vote WHERE userId = ? AND reviewId = ?";
     try (Connection conn = dataSource.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -108,15 +110,15 @@ public class VoteService {
               return rs.getString("type");
             }
           }
+    } catch (SQLException e) {
+      e.printStackTrace();
     }
-    
-    System.out.println("To be tested.");
     return "no-vote";
   }
 
   /**
    * Counts all the upvotes for a given post
-   * @return
+   * @return number of upvotes 
    * @throws SQLException
    */
   public int countUpvotes(String reviewId) throws SQLException {
@@ -130,13 +132,12 @@ public class VoteService {
             }
           }
     }
-    System.out.println("To be tested.");
     return 0;
   }
 
   /**
    * Counts all the downvotes for a given post
-   * @return
+   * @return number of downvotes
    * @throws SQLException
    */
   public int countDownvotes(String reviewId) throws SQLException {
@@ -150,30 +151,7 @@ public class VoteService {
             }
           }
     }
-    System.out.println("To be tested.");
     return 0;
   }
-
-/* PROBABLY NOT NEEDED -- REDUNDANT
-  
-   * Checks if a user has upvoted a post 
-   * @return
-   * @throws SQLException
-   
-  public boolean isUpvoted () throws SQLException {
-    System.out.println("To be implemented.");
-    return false;
-  }
-
-  
-   * Checks if a user has downvoted a post 
-   * @return
-   * @throws SQLException
-  
-  public boolean isDownvoted () throws SQLException {
-    System.out.println("To be implemented.");
-    return false;
-  }
-*/ 
 
 }

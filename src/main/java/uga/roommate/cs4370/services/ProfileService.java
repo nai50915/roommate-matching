@@ -27,6 +27,16 @@ import uga.roommate.cs4370.models.Attribute;
 @Service
 public class ProfileService {
     private final DataSource dataSource;
+    private static final Map<String, String> TAG_MAP = Map.of(
+        "Clean", "Clean",
+        "Messy", "Messy",
+        "EB", "Early Bird",
+        "NO", "Night Owl",
+        "LS", "Light Sleeper",
+        "Smoker", "Smoker",
+        "Drinker", "Drinker",
+        "Pets", "Pets",
+        "NP", "No Pets");
 
     @Autowired
     public ProfileService(DataSource dataSource) {
@@ -37,7 +47,8 @@ public class ProfileService {
      * Retrieve the information for the user.
      * 
      * @param userId
-     * @return
+     * @return user user object with information 
+     * @throws SQLException
      */
     public User getUser(String userId) throws SQLException {
         System.out.println("GETUSER: Attempting to fetch user with ID: " + userId);
@@ -68,34 +79,16 @@ public class ProfileService {
                     throw new SQLException("No user found for userId: " + userId);
                 }
             }
-        }
-        /*
-         * We have the user's userId. we use this to get the
-         * profile picture, first name, last name, bio, attributes, and tags of the user
-         * we also need to calculate the overall rating of the user.
-         * (done in a helper function)
-         */
+        } 
     }
-
-    private static final Map<String, String> TAG_MAP = Map.of(
-            "Clean", "Clean",
-            "Messy", "Messy",
-            "EB", "Early Bird",
-            "NO", "Night Owl",
-            "LS", "Light Sleeper",
-            "Smoker", "Smoker",
-            "Drinker", "Drinker",
-            "Pets", "Pets",
-            "NP", "No Pets");
 
     /**
      * Retrieves personally prescribed attributes of user
      * 
      * @param userId
      * @return attributes
-     * @throws SQLException
      */
-    public List<Attribute> getAttributes(String userId) throws SQLException {
+    public List<Attribute> getAttributes(String userId) {
         List<Attribute> attributes = new ArrayList<>();
 
         String sql = "SELECT a.attrId, a.name, a.category " +
@@ -117,8 +110,9 @@ public class ProfileService {
                     attributes.add(attr);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
         return attributes;
     }
 
@@ -127,10 +121,8 @@ public class ProfileService {
      * 
      * @param userId
      * @return tags
-     * @throws SQLException
      */
     public ArrayList<String> getTags(String userId) {
-        System.out.println("GETTAGS: To be tested.");
         ArrayList<String> tags = new ArrayList<>();
         String sql = "SELECT DISTINCT t.tagName " +
                 "FROM user u, tag t, reviewTag tg, review r " +
@@ -143,7 +135,7 @@ public class ProfileService {
                 while (rs.next()) {
                     String tag = rs.getString("tagName");
                     String tagFull = TAG_MAP.getOrDefault(tag, tag);
-                    tags.add(tag);
+                    tags.add(tagFull);
                 }
             }
         } catch (SQLException e) {
@@ -163,9 +155,8 @@ public class ProfileService {
      * 
      * @param userId
      * @return double representing average user rating
-     * @throws SQLException
      */
-    public double getRating(String userId) throws SQLException {
+    public double getRating(String userId) {
         System.out.println("GETRATING: To be tested.");
         String sql = "SELECT AVG(ratingValue) FROM review WHERE revieweeId = ?";
         try (Connection conn = dataSource.getConnection();
@@ -177,15 +168,19 @@ public class ProfileService {
                 } else
                     return 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 
     /**
      * Retrieve the reviews for a user
      * 
-     * @return
+     * @param userId user 
+     * @return reviews list of reviews for the user 
      */
-    public List<ProfileReview> getReviews(String userId) throws SQLException {
+    public List<ProfileReview> getReviews(String userId) {
         System.out.println("GETREVIEW: To be tested.");
         List<ProfileReview> reviews = new ArrayList<>();
 
@@ -217,8 +212,9 @@ public class ProfileService {
                     reviews.add(review);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
         System.out.println(reviews);
         return reviews;
     }
