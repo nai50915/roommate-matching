@@ -11,15 +11,19 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import uga.roommate.cs4370.models.User;
+import uga.roommate.cs4370.services.ProfileService;
 
 @Service
 public class PastRoommateService {
     private final DataSource dataSource;
+    private final ProfileService profileService;
 
     @Autowired
-    public PastRoommateService(DataSource dataSource) {
+    public PastRoommateService(DataSource dataSource, ProfileService profileService) {
         this.dataSource = dataSource;
+        this.profileService = profileService;
     }
 
     public void addPastRoommate(int userId1, int userId2) throws SQLException {
@@ -50,7 +54,7 @@ public class PastRoommateService {
 
     public List<User> getPastRoommates(String userId) throws SQLException {
         List<User> pastRoommates = new ArrayList<>();
-        String sql = "SELECT u.* FROM user u " +
+        String sql = "SELECT u.userId FROM user u " +
                 "JOIN pastRoommate pr ON (pr.userA = ? AND u.userId = pr.userB) " +
                 "OR (pr.userB = ? AND u.userId = pr.userA)";
 
@@ -61,10 +65,10 @@ public class PastRoommateService {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String firstName = rs.getString("firstName");
-                String lastName = rs.getString("lastName");
+                // String firstName = rs.getString("firstName");
+                // String lastName = rs.getString("lastName");
                 String userIdStr = rs.getString("userId");
-                User user = new User(userIdStr, null, firstName, lastName, null, null, null, null);
+                User user = profileService.getUser(userIdStr); // new User(userIdStr, null, firstName, lastName, null, null, null, null);
 
                 pastRoommates.add(user);
             }
