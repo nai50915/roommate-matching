@@ -28,15 +28,15 @@ import uga.roommate.cs4370.models.Attribute;
 public class ProfileService {
     private final DataSource dataSource;
     private static final Map<String, String> TAG_MAP = Map.of(
-        "Clean", "Clean",
-        "Messy", "Messy",
-        "EB", "Early Bird",
-        "NO", "Night Owl",
-        "LS", "Light Sleeper",
-        "Smoker", "Smoker",
-        "Drinker", "Drinker",
-        "Pets", "Pets",
-        "NP", "No Pets");
+            "Clean", "Clean",
+            "Messy", "Messy",
+            "EB", "Early Bird",
+            "NO", "Night Owl",
+            "LS", "Light Sleeper",
+            "Smoker", "Smoker",
+            "Drinker", "Drinker",
+            "Pets", "Pets",
+            "NP", "No Pets");
 
     @Autowired
     public ProfileService(DataSource dataSource) {
@@ -57,16 +57,23 @@ public class ProfileService {
 
         try (Connection conn = dataSource.getConnection();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
+<<<<<<< HEAD
 
             ps.setString(1, userId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+=======
+            ps.setString(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
                     String username = rs.getString("username");
                     String firstName = rs.getString("firstName");
                     String lastName = rs.getString("lastName");
                     String bio = rs.getString("description");
                     String imagePath = rs.getString("imageUrl");
+<<<<<<< HEAD
 
                     List<Attribute> attributes = getAttributes(userId);
                     ArrayList<String> tags = getTags(userId);
@@ -120,6 +127,7 @@ public class ProfileService {
      * Retrieves the tags for a user (from reviews)
      * 
      * @param userId
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
      * @return tags
      */
     public ArrayList<String> getTags(String userId) {
@@ -134,21 +142,23 @@ public class ProfileService {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     String tag = rs.getString("tagName");
+<<<<<<< HEAD
                     String tagFull = TAG_MAP.getOrDefault(tag, tag);
                     tags.add(tagFull);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+=======
+                    tags.add(tag);
+                }
+            }>>>>>>>79 cfbe088a68deff5a8d4215c9f139f85dfafaa8
 
-        if (tags.isEmpty()) {
-            tags.add("No tags yet");
-        }
-
-        System.out.println(tags);
-        return tags;
     }
+
+    if(tags.isEmpty()){tags.add("No tags yet");}
+
+    System.out.println(tags);return tags;}
 
     /**
      * Calculate the current user's overall rating from reviews
@@ -165,20 +175,27 @@ public class ProfileService {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getDouble(1);
+<<<<<<< HEAD
                 } else
                     return 0;
+=======
+                }
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
+        }catch(
+
+    SQLException e)
+    {
+        e.printStackTrace();
+        return -1;
+    }
     }
 
     /**
      * Retrieve the reviews for a user
      * 
-     * @param userId user 
-     * @return reviews list of reviews for the user 
+     * @param userId user
+     * @return reviews list of reviews for the user
      */
     public List<ProfileReview> getReviews(String userId) {
         System.out.println("GETREVIEW: To be tested.");
@@ -217,5 +234,20 @@ public class ProfileService {
         }
         System.out.println(reviews);
         return reviews;
+    }=======
+
+    private List<Review> getReviews(String userId) {
+        /*
+         * we have the user's userId. we use this to find all the
+         * reviews written about them. then from those reviews, we take
+         * the content, reviewerId, and get the upvote count and downvote
+         * count.
+         * using the reviewerId, we get the profilepicture, firstname, and
+         * lastname
+         */
+        System.out.println("To be implemented.");
+        return null;
     }
+
+    >>>>>>>79 cfbe088a68deff5a8d4215c9f139f85dfafaa8
 }

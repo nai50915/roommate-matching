@@ -17,8 +17,14 @@ import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.services.AttributeService;
 import uga.roommate.cs4370.services.UserService;
 import uga.roommate.cs4370.services.ProfileService;
+<<<<<<< HEAD
 import uga.roommate.cs4370.models.ProfileReview;
 import uga.roommate.cs4370.models.Rate;
+=======
+import uga.roommate.cs4370.services.AttributeService;
+import uga.roommate.cs4370.models.User;
+import uga.roommate.cs4370.models.Attribute;
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
 
 @Controller
 @RequestMapping("/Profile")
@@ -43,6 +49,7 @@ public class ProfileController {
 
     @GetMapping
     public ModelAndView profileOfLoggedInUser() throws SQLException {
+<<<<<<< HEAD
         String userId = userService.getLoggedInUser().getUserId();
 
         try {
@@ -53,6 +60,13 @@ public class ProfileController {
             e.printStackTrace();
             return new ModelAndView("error_message").addObject("errorMessage", "User profile not found.");
         }
+=======
+        System.out.println("User is attempting to view profile of the logged in user.");
+        String userId = userService.getLoggedInUser().getUserId();
+        ModelAndView mv = profileOfSpecificUser(userId);
+        mv.addObject("isOwnProfile", true);
+        return mv;
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
     }
 
     @GetMapping("/{userId}")
@@ -79,10 +93,18 @@ public class ProfileController {
     public ModelAndView showAttributeEditor() throws SQLException {
         String userId = userService.getLoggedInUser().getUserId();
         List<Attribute> allAttrs = attributeService.getAllAttributesWithSelection(userId);
+<<<<<<< HEAD
+=======
+        List<Integer> selected = attributeService.getUserAttributeIds(userId);
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
         User user = profileService.getUser(userId);
 
         ModelAndView mv = new ModelAndView("edit_attributes");
         mv.addObject("allAttributes", allAttrs);
+<<<<<<< HEAD
+=======
+        mv.addObject("selectedAttributeIds", selected);
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8
         mv.addObject("user", user);
         return mv;
     }

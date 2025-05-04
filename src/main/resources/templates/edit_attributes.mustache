@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h2>Edit Your Attributes</h2>
 
 <form method="post" action="/Profile/Attributes">
@@ -21,3 +22,16 @@
     <br>
     <button type="submit">Save Attributes</button>
 </form>
+=======
+<form method="post" action="/profile/attributes">
+    {{#allAttributes}}
+        <input type="checkbox" 
+               name="attributes" 
+               value="{{attrId}}" 
+               id="attr_{{attrId}}" 
+               {{#selected}}checked{{/selected}}>
+        <label for="attr_{{attrId}}">{{name}}</label><br>
+    {{/allAttributes}}
+    <button type="submit">Save</button>
+</form>
+>>>>>>> 79cfbe088a68deff5a8d4215c9f139f85dfafaa8

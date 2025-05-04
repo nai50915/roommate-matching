@@ -76,6 +76,7 @@ public class UserService {
      */
     public void unAuthenticate() {
         loggedInUser = null;
+        System.out.println("Logged In User has been logged out = " + loggedInUser);
     }
 
     /**
@@ -152,4 +153,5 @@ public class UserService {
         }
     }
 
+    =======>>>>>>>79 cfbe088a68deff5a8d4215c9f139f85dfafaa8
 }
