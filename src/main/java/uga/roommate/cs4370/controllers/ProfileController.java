@@ -15,13 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 import uga.roommate.cs4370.models.Attribute;
 import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.services.AttributeService;
-import uga.roommate.cs4370.models.Attribute;
-import uga.roommate.cs4370.models.User;
+import uga.roommate.cs4370.services.UserService;
+import uga.roommate.cs4370.services.ProfileService;
 import uga.roommate.cs4370.models.ProfileReview;
 import uga.roommate.cs4370.models.Rate;
 
 @Controller
-@RequestMapping("/Profile")
+@RequestMapping("/profile")
 public class ProfileController {
 
     // UserService has user login and registration related functions.

@@ -8,7 +8,9 @@
                    value="{{attrId}}" 
                    id="attr_{{attrId}}"
                    {{#selected}}checked{{/selected}}>
-            <label for="attr_{{attrId}}">{{name}}</label>
+            <label for="attr_{{attrId}}">
+      <strong>{{category}}</strong>: {{name}}
+    </label>
         </div>
     {{/allAttributes}}
 

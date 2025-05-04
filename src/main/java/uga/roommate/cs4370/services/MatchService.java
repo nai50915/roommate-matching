@@ -26,7 +26,7 @@ import uga.roommate.cs4370.models.MatchedUser;
  */
 @Service
 public class MatchService {
-    private final DataSource dataSource; 
+    private final DataSource dataSource;
     private final ProfileService profileService;
 
     @Autowired
@@ -41,14 +41,14 @@ public class MatchService {
 
         String sql = "SELECT userId FROM user WHERE userId != ?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, userId);
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, userId);
 
-                try (ResultSet rs = ps.executeQuery()) {
-                    while (rs.next()) {
-                        allUserIds.add(rs.getString("userId"));
-                    }
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    allUserIds.add(rs.getString("userId"));
                 }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -59,12 +59,12 @@ public class MatchService {
             try {
                 if (isMatched(userId, potentialMatch)) {
                     List<String> tagsA = profileService.getTags(userId);
-                    List<String> tagsB = profileService.getTags(potentialMatch);    
+                    List<String> tagsB = profileService.getTags(potentialMatch);
                     double percentage = calculatePercentageMatch(tagsA, tagsB) * 100;
                     User user = profileService.getUser(potentialMatch);
-                    MatchedUser matchedUser = new MatchedUser
-                        (potentialMatch, user.username(), user.getFirstName(), user.getLastName(),
-                         user.getBio(), user.getImagePath(), tagsB, true, percentage);
+                    MatchedUser matchedUser = new MatchedUser(potentialMatch, user.username(), user.getFirstName(),
+                            user.getLastName(),
+                            user.getBio(), user.getImagePath(), tagsB, true, percentage);
                     matches.add(matchedUser);
                 }
             } catch (SQLException e) {
@@ -76,7 +76,7 @@ public class MatchService {
 
     /**
      * Establish a match between two users if they have more than 50%
-     * of their tags in common 
+     * of their tags in common
      */
     public void matchUser(String matchAId, String matchBId) {
         System.out.println("Attempting to match " + matchAId + " and " + matchBId);
@@ -86,7 +86,6 @@ public class MatchService {
 
         System.out.println("Tags for " + matchAId + ": " + tagsA);
         System.out.println("Tags for " + matchBId + ": " + tagsB);
-    
 
         double percentageMatch = calculatePercentageMatch(tagsA, tagsB);
         if (percentageMatch < 0.5) {
@@ -96,8 +95,8 @@ public class MatchService {
 
         Set<String> intersection = new HashSet<>(tagsA);
         intersection.retainAll(tagsB);
-        int commonTags = intersection.size();    
-    
+        int commonTags = intersection.size();
+
         boolean formatFollowed = checkFormat(matchAId, matchBId);
         if (!formatFollowed) {
             System.out.println("Swapping user IDs to maintain (min, max) format.");
@@ -115,31 +114,31 @@ public class MatchService {
             e.printStackTrace();
             return; // Optional: skip insert if check fails
         }
-    
 
         String sql = "INSERT INTO matches (userA, userB, tags_match) VALUES (?, ?, ?)";
-        
+
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, matchAId);
-                ps.setString(2, matchBId);
-                ps.setInt(3, commonTags);
-                System.out.println("Executing match insert: [" + matchAId + ", " + matchBId + ", " + commonTags + "]");
-                ps.executeUpdate();
-                System.out.println("Match successfully inserted.");
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, matchAId);
+            ps.setString(2, matchBId);
+            ps.setInt(3, commonTags);
+            System.out.println("Executing match insert: [" + matchAId + ", " + matchBId + ", " + commonTags + "]");
+            ps.executeUpdate();
+            System.out.println("Match successfully inserted.");
         } catch (SQLException e) {
-                System.err.println("SQL Exception during match insertion: " + e.getMessage());
-                e.printStackTrace();
+            System.err.println("SQL Exception during match insertion: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-    
+
     /**
      * Check if two users are matched
      * NOTE: This follows a (min, max) formatting, so matchAId < matchBId
+     * 
      * @return true if matched, false otherwise
      */
     public boolean isMatched(String matchAId, String matchBId) throws SQLException {
-        System.out.println("To be tested.");  
+        System.out.println("To be tested.");
         boolean formatFollowed = checkFormat(matchAId, matchBId);
         if (!formatFollowed) {
             String temp = matchBId;
@@ -148,28 +147,28 @@ public class MatchService {
         }
         String sql = "SELECT COUNT(*) FROM matches WHERE userA = ? AND userB = ?";
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, matchAId);
-                ps.setString(2, matchBId);
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, matchAId);
+            ps.setString(2, matchBId);
 
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        return rs.getInt(1) > 0;
-                    }
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
                 }
-          }
+            }
+        }
         return false;
     }
 
     /**
      * Helper method to determine if (min, max) format is adhered to
      * 
-     * @param matchAId 
+     * @param matchAId
      * @param matchBId
      * @return true if (min, max) format is satisfied, false otherwise.
      */
     public boolean checkFormat(String matchAId, String matchBId) {
-        int aId, bId; 
+        int aId, bId;
         try {
             aId = Integer.parseInt(matchAId);
             bId = Integer.parseInt(matchBId);
@@ -189,18 +188,19 @@ public class MatchService {
 
         if (tagsA.get(0).equals("No tags yet") || tagsB.get(0).equals("No tags yet")) {
             return 0.0;
-        }  
+        }
         Set<String> setA = new HashSet<>(tagsA);
         Set<String> setB = new HashSet<>(tagsB);
-    
+
         Set<String> intersection = new HashSet<>(setA);
         intersection.retainAll(setB);
         int commonTags = intersection.size();
-    
+
         double percentA = (double) commonTags / setA.size();
         double percentB = (double) commonTags / setB.size();
-        System.out.printf("Common tags: %d. MatchA %.2f%%, MatchB %.2f%%\n", commonTags, percentA * 100, percentB * 100);
-       
+        System.out.printf("Common tags: %d. MatchA %.2f%%, MatchB %.2f%%\n", commonTags, percentA * 100,
+                percentB * 100);
+
         return Math.max(percentA, percentB);
     }
 
