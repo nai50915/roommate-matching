@@ -44,14 +44,12 @@ public class ProfileController {
     @GetMapping
     public ModelAndView profileOfLoggedInUser() throws SQLException {
         String userId = userService.getLoggedInUser().getUserId();
-        System.out.println("Logged-in userId: " + userId);
 
         try {
             ModelAndView mv = profileOfSpecificUser(userId);
             mv.addObject("isOwnProfile", true);
             return mv;
         } catch (SQLException e) {
-            System.err.println("Failed to load profile for userId: " + userId);
             e.printStackTrace();
             return new ModelAndView("error_message").addObject("errorMessage", "User profile not found.");
         }
@@ -59,29 +57,25 @@ public class ProfileController {
 
     @GetMapping("/{userId}")
     public ModelAndView profileOfSpecificUser(@PathVariable("userId") String userId) throws SQLException {
-        System.out.println("User is attempting to view profile: " + userId);
         ModelAndView mv = new ModelAndView("profile_page");
 
-        User user = profileService.getUser(userId); // Replace this with real service call
+        User user = profileService.getUser(userId); 
         double rating = profileService.getRating(userId);
         Rate profileRating = new Rate(rating);
         List<String> tags = profileService.getTags(userId);
         List<ProfileReview> reviews = profileService.getReviews(userId);
 
-        // Add user object to the model
         mv.addObject("user", user);
         mv.addObject("tags", tags);
         mv.addObject("rate", profileRating);
         mv.addObject("reviews", reviews);
 
-        // Optional error message
-        // mv.addObject("errorMessage", error);
         boolean isOwn = userService.getLoggedInUser().getUserId().equals(userId);
         mv.addObject("isOwnProfile", isOwn);
         return mv;
     }
 
-    @GetMapping("/attributes")
+    @GetMapping("/Attributes")
     public ModelAndView showAttributeEditor() throws SQLException {
         String userId = userService.getLoggedInUser().getUserId();
         List<Attribute> allAttrs = attributeService.getAllAttributesWithSelection(userId);
@@ -93,11 +87,11 @@ public class ProfileController {
         return mv;
     }
 
-    @PostMapping("/attributes")
+    @PostMapping("/Attributes")
     public String updateAttributes(@RequestParam("attributes") List<Integer> attributes) throws SQLException {
         String userId = userService.getLoggedInUser().getUserId();
         attributeService.updateUserAttributes(userId, attributes);
-        return "redirect:/profile";
+        return "redirect:/Profile";
     }
 
 }
