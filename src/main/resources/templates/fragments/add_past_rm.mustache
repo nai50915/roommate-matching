@@ -14,11 +14,14 @@
             {{/tags}}
         </div>
     </div>
-    <div class="match_percent">
-        <form method="POST" action="/Add-Past-Roommate">
-            <input type="hidden" name="userIdToAdd" value="{{userId}}">
-            <button type="submit">ADD</button>
-        </form>
-    </div>
+   <div class="match_percent">
+    <form method="POST" action="/Find-Past-Roommate/addPastRoommate">
+        <!-- Assuming you have the current user's ID available as `currentUserId` and the user being added as `userIdToAdd` -->
+        <input type="hidden" name="currentUserId" value="{{currentUserId}}">
+        <input type="hidden" name="newRoommateId" value="{{userId}}">
+        <button type="submit">ADD</button>
+    </form>
+</div>
+
 </div>
 {{/users}}
