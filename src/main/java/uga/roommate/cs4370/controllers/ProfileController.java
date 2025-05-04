@@ -97,25 +97,31 @@ public class ProfileController {
         return "redirect:/Profile";
     }
 
-    @RequestMapping("/Vote/{reviewId}/{isAdd}/{isUpVote}")
+    @RequestMapping("/Vote/{reviewId}/{isUpVote}")
     public String vote(@PathVariable("reviewId") String reviewId,
-        @PathVariable("isAdd") Boolean isAdd,
         @PathVariable("isUpVote") Boolean isUpVote) {
         System.out.println("User attempts to vote on: " + reviewId);
         String userId = userService.getLoggedInUser().getUserId();
-        try {
-            if (isAdd) {
-                if (isUpVote) {
-                    voteService.upvotePost(userId, reviewId);
-                } else {
-                    voteService.downvotePost(userId, reviewId);
-                }
-            } else {
+        String voteStatus = voteService.hasVoted(userId, reviewId); // if user voted already
+        if (voteStatus.equals("upvote")) { // user has prev upvoted 
+            if (isUpVote) { // click to remove 
+                voteService.removeVote(userId, reviewId);
+            } else { // user has upvoted but isUpVote = false, so the user is downvoting
+                voteService.downvotePost(userId, reviewId);
+            }
+        } else if (voteStatus.equals("downvote")) { // user has prev downvoted
+            if (isUpVote) { // user has downvoted but isUpVote = true, so user is upvoting
+                voteService.upvotePost(userId, reviewId);
+            } else { // click to remove 
                 voteService.removeVote(userId, reviewId);
             }
-            return "redirect:/Profile";
-        } catch (Exception e) {
-            return "redirect:/Profile";         
+        } else { // user hasn't voted yet 
+            if (isUpVote) {
+                voteService.upvotePost(userId, reviewId);
+            } else {
+                voteService.downvotePost(userId, reviewId);
+            }
         }
+        return "redirect:/Profile";
     }
 }
