@@ -1,10 +1,24 @@
-        <div class="add_roomate">
-                <div class="match_profile_pic"></div>
-                <div class ="match_desc">
-                    <div class ="match_name">Name</div>
-                    <div class="match_tags">Tags</div>
-                </div>
-                <div class="match_percent">
-                    <button>ADD</button>
-                </div>
+{{#users}}
+<div class="add_roomate">
+    <div class="match_profile_pic">
+        <img src="{{imagePath}}" alt="Profile Picture of {{firstName}}" class="profile_img">
+    </div>
+    <div class="match_desc">
+        <div class="match_name">{{firstName}} {{lastName}}</div>
+        <div class="match_tags">
+            {{#tags}}
+                <span class="tag">{{.}}</span>
+            {{/tags}}
+            {{^tags}}
+                <span class="tag">No tags</span>
+            {{/tags}}
         </div>
+    </div>
+    <div class="match_percent">
+        <form method="POST" action="/Add-Past-Roommate">
+            <input type="hidden" name="userIdToAdd" value="{{userId}}">
+            <button type="submit">ADD</button>
+        </form>
+    </div>
+</div>
+{{/users}}
