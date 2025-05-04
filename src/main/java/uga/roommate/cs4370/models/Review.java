@@ -3,6 +3,9 @@ package uga.roommate.cs4370.models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to represent a review and different attributes of it
+ */
 public class Review {
   private final String reviewId;
   private final User reviewer;

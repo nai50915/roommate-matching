@@ -43,7 +43,6 @@ public class MatchesController {
         ArrayList<MatchedUser> matches = matchService.getAllMatches(userId);
         mv.addObject("matches", matches);
         mv.addObject("errorMessage", error);
-        System.out.println("Going to matches page...");
         return mv;
     }
 

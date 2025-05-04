@@ -1,5 +1,8 @@
 package uga.roommate.cs4370.models;
 
+/**
+ * Represent an user attribute 
+ */
 public class Attribute {
     private int attrId;
     private String name;

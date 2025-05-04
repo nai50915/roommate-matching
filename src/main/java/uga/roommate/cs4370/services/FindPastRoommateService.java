@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uga.roommate.cs4370.models.User;
 
+/**
+ * This is a service class to assist in building the find past-roommate page.
+ * This class interacts with the database through a dataSource instance.
+ */
 @Service
 public class FindPastRoommateService {
     private final DataSource dataSource;
@@ -27,6 +31,13 @@ public class FindPastRoommateService {
         this.dataSource = dataSource;
     }
 
+    /**
+     * Retrieve all the users except logged-in user
+     * 
+     * @param userId logged in user
+     * @return allUsers list of all users
+     * @throws SQLException
+     */
     public List<User> getAllUsersExcept(String userId) throws SQLException {
         List<User> allUsers = new ArrayList<>();
         String sql = "SELECT userId FROM user " +
@@ -45,16 +56,8 @@ public class FindPastRoommateService {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    // String firstName = rs.getString("firstName");
-                    // String lastName = rs.getString("lastName");
                     String newUserId = rs.getString("userId");
-                    // String username = rs.getString("username");
-                    // String bio = rs.getString("bio");
-                    // String imagePath = rs.getString("imagePath");
-                    // List<String> tags = new ArrayList<>();
-                    // String tagsStr = rs.getString("tags");
-                    User user = profileService.getUser(newUserId); // new User(userIdStr, null, firstName, lastName, null, null, null, null);
-
+                    User user = profileService.getUser(newUserId);
                     allUsers.add(user);
                 }
             }
@@ -62,7 +65,13 @@ public class FindPastRoommateService {
         return allUsers;
     }
 
-    // Add method to add a past roommate
+    /**
+     * Add a past roommate 
+     * 
+     * @param currentUserId logged in user
+     * @param newRoommateId user to add as roommmate
+     * @throws SQLException
+     */
     public void addPastRoommate(int currentUserId, int newRoommateId) throws SQLException {
         System.out.println("Adding past roommate: " + currentUserId + " witth " + newRoommateId);
         pastRoommateService.addPastRoommate(currentUserId, newRoommateId); // Call the method in PastRoommateService

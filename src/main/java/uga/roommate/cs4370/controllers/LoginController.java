@@ -19,7 +19,6 @@ import uga.roommate.cs4370.services.UserService;
 @RequestMapping("/login")
 public class LoginController {
 
-    // UserService has user login and registration related functions.
     private final UserService userService;
 
     /**
