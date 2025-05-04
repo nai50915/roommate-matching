@@ -21,7 +21,7 @@ import uga.roommate.cs4370.models.MatchedUser;
  * Handles /Matches URL
  */
 @Controller
-@RequestMapping("/Matches")
+@RequestMapping("/matches")
 public class MatchesController {
 
     private final MatchService matchService;
@@ -36,8 +36,8 @@ public class MatchesController {
     /**
      * Serves /Matches page
      */
-    @GetMapping 
-    public ModelAndView webpage (@RequestParam(name = "error", required = false) String error) {
+    @GetMapping
+    public ModelAndView webpage(@RequestParam(name = "error", required = false) String error) {
         ModelAndView mv = new ModelAndView("matches");
         String userId = userService.getLoggedInUser().getUserId();
         ArrayList<MatchedUser> matches = matchService.getAllMatches(userId);
