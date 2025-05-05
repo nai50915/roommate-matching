@@ -17,6 +17,8 @@ Before compiling and running, ensure you are in the finalproj directory. </br>
 **Netra Amin**: Database design, planning, (finding) past roommates, compiling deliverables </br>
 ### <ins> <code style="color : aqua">Technologies Used</code> </ins>
 **Figma**: To begin designing the web application and map out basic navigation </br>
+**Docker**: Container service provider </br>
+**MySQL**: Database management software </br>
 **Mustache**: Create dynamic HTML pages for the application </br>
 **CSS**: Format and style elements for the application </br>
 **JavaScript**: Basic functions </br>
