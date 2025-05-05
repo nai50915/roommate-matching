@@ -56,8 +56,6 @@ public class ProfileService {
      * @throws SQLException
      */
     public User getUser(String userId) throws SQLException {
-        System.out.println("GETUSER: Attempting to fetch user with ID: " + userId);
-
         String sql = "SELECT username, firstName, lastName, description, imageUrl FROM user WHERE userId = ?";
 
         try (Connection conn = dataSource.getConnection();
@@ -215,7 +213,8 @@ public class ProfileService {
                     int downvoteCount = voteService.countDownvotes(reviewId);
 
                     ProfileReview review = new ProfileReview(
-                            reviewId, revieweeFirstName, reviewerFirstName, reviewerImg, content, upvoteCount, downvoteCount);
+                            reviewId, revieweeFirstName, reviewerFirstName, reviewerImg, content, upvoteCount,
+                            downvoteCount);
                     reviews.add(review);
                 }
             }
