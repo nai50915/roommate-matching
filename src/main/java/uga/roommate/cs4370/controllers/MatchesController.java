@@ -21,7 +21,7 @@ import uga.roommate.cs4370.models.MatchedUser;
  * Handles /matches URL
  */
 @Controller
-@RequestMapping("/matches")
+@RequestMapping("/Matches")
 public class MatchesController {
 
     private final MatchService matchService;
