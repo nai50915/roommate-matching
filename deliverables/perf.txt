@@ -1,25 +1,21 @@
 create index userId_index on user(userId); 
-BEFORE INDEX: 0.01 sec
-QUERY:
+QUERY (see L154 in queries.sql):
 SELECT r.reviewId AS reviewId, ee.firstName AS revieweeFirstName, 
   er.firstName AS reviewerFirstName, er.imageUrl AS reviewerImg,
   r.content AS content 
   FROM review r JOIN user er ON r.reviewerId = er.userId 
   JOIN user ee ON r.revieweeId = ee.userId 
-  WHERE r.revieweeId = 31956 
+  WHERE r.revieweeId = ? 
   ORDER BY r.createdAt DESC;
+BEFORE INDEX: 0.01 sec
 AFTER INDEX: 0.00 sec
 
 
 
 create index reviewId_index on review(reviewId);
+QUERY (see L145 in queries.sql): 
+SELECT AVG(ratingValue) 
+  FROM review 
+  WHERE revieweeId = ?;
 BEFORE INDEX: 0.01 sec
-QUERY: 
-SELECT r.reviewId AS reviewId, ee.firstName AS revieweeFirstName, 
-  er.firstName AS reviewerFirstName, er.imageUrl AS reviewerImg,
-  r.content AS content 
-  FROM review r JOIN user er ON r.reviewerId = er.userId 
-  JOIN user ee ON r.revieweeId = ee.userId 
-  WHERE r.revieweeId = 31956 
-  ORDER BY r.createdAt DESC;
 AFTER INDEX: 0.00 sec
