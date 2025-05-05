@@ -84,9 +84,19 @@ public class ReviewDataGenerator {
                         "INSERT INTO review (reviewerId, revieweeId, content, ratingValue) " +
                                 "VALUES (%d, %d, '%s', %d);",
                         reviewerId, revieweeId, content, rating);
-
                 writer.write(insert);
                 writer.newLine();
+                for (int j = 0; j < 3; j++) {
+                    int tagId = randBetween(1, 8);
+                    String insertTag = String.format(
+                        "INSERT INTO reviewTag (tagId, reviewId) " + 
+                        "VALUES (%d, %d);",
+                        tagId, i + 1);
+                    writer.write(insertTag);
+                    writer.newLine();
+                }
+                writer.newLine();
+
             }
             System.out.println("Successfully wrote review inserts to: " + filePath);
         } catch (IOException e) {
