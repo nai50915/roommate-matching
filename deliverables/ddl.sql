@@ -64,8 +64,7 @@ create table if not exists allUserAttributes (
     attrId int auto_increment, 
     name varchar(200) not null unique, 
     category varchar(50), 
-    primary key (attrId)
-    -- category varchar(50), 
+    primary key (attrId) 
 );
 
 -- Create the userAttributes table
