@@ -1,3 +1,14 @@
+----- Predetermined Tags List for tag Table (refer to ddl.sql)
+INSERT INTO tag (tagName) VALUES ('Clean');
+INSERT INTO tag (tagName) VALUES ('Messy');
+INSERT INTO tag (tagName) VALUES ('EB'); 
+INSERT INTO tag (tagName) VALUES ('NO');
+INSERT INTO tag (tagName) VALUES ('LS'); 
+INSERT INTO tag (tagName) VALUES ('Smoker');
+INSERT INTO tag (tagName) VALUES ('Drinker');
+INSERT INTO tag (tagName) VALUES ('Pets');
+INSERT INTO tag (tagName) VALUES ('NP'); 
+
 ----- Predetermined Attributes List for allUserAttributes Table (refer to ddl.sql)
 -- Year in School
 INSERT INTO allUserAttributes (name) VALUES
