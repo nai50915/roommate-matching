@@ -1,1 +1,24 @@
+# security.txt
+
+Password Storage and Authentication Approach
+-------------------------------------------
+
+The BCryptPasswordEncoder class from Spring Security uses the bcrypt 
+hashing algorithm to safely store all user passwords. Bcrypt is designed to 
+be slow and computationally intensive, which helps protect against
+brute-force attacks.
+
+Key Security Details:
+- Algorithm: bcrypt
+- Library: org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+- Storage: Passwords are stored as BCrypt hashes in the database, rather than storing plaintext passwords.
+- Salted Hashes:  Each password is uniquely and automatically salted before hashing. 
+
+Authentication Process:
+- User submits their username and password
+- System retrieves the stored password hash for the username
+- BCrypt compares the submitted password against the stored hash
+     - Raw passwords are validated during login using BCryptPasswordEncoder's `matches()` method.
+- Access is granted only on successful match
+
 

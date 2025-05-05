@@ -84,6 +84,7 @@ create table if not exists allUserAttributes (
     name varchar(200) not null unique, 
     category varchar(50), 
     primary key (attrId)
+    -- category varchar(50), 
 );
 -- Year in School
 INSERT INTO allUserAttributes (name) VALUES
