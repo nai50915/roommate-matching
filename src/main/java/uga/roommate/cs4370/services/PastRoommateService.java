@@ -51,26 +51,6 @@ public class PastRoommateService {
     }
 
     /**
-     * Removes past roommate 
-     * 
-     * @param userId1
-     * @param userId2
-     * @throws SQLException
-     */
-    public void removePastRoommate(int userId1, int userId2) throws SQLException {
-        int userA = Math.min(userId1, userId2);
-        int userB = Math.max(userId1, userId2);
-
-        String sql = "DELETE FROM pastRoommate WHERE userA = ? AND userB = ?";
-        try (Connection conn = dataSource.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, userA);
-            stmt.setInt(2, userB);
-            stmt.executeUpdate();
-        }
-    }
-
-    /**
      * Retrieve all past roommates of logged-in user
      * 
      * @param userId
