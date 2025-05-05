@@ -1,3 +1,78 @@
+----- Predetermined Attributes List for allUserAttributes Table (refer to ddl.sql)
+-- Year in School
+INSERT INTO allUserAttributes (name) VALUES
+  ('freshman'),
+  ('sophomore'),
+  ('junior'),
+  ('senior'),
+  ('graduate');
+
+-- Studying Scopes / Majors
+INSERT INTO allUserAttributes (name) VALUES
+  ('business'),
+  ('science'),
+  ('public affairs'),
+  ('medicine'),
+  ('engineering'),
+  ('education'),
+  ('other'),
+  ('law');
+
+-- Cleanliness Habits
+INSERT INTO allUserAttributes (name) VALUES
+  ('does not mind mess'), 
+  ('can be a little cluttered'),
+  ('cleanliness obsessed');
+
+-- Productivity / Schedule
+INSERT INTO allUserAttributes (name) VALUES
+  ('early bird'),
+  ('night owl'),
+  ('needs quiet time to focus');
+
+-- Religion / Spirituality
+INSERT INTO allUserAttributes (name) VALUES
+  ('religious'),
+  ('not religious'),
+  ('muslim'),
+  ('christian'),
+  ('jewish'),
+  ('polytheist');
+
+-- Dating Habits
+INSERT INTO allUserAttributes (name) VALUES
+  ('currently dating'),
+  ('expect overnight guests'),
+  ('single pringle'),
+  ('has a partner');
+
+-- Social Habits
+INSERT INTO allUserAttributes (name) VALUES
+  ('drinks'),
+  ('smokes'),
+  ('dry'), 
+  ('no drinking or smoking tolerated'),
+  ('likes to host');
+
+-- Pets
+INSERT INTO allUserAttributes (name) VALUES
+  ('has a pet'),
+  ('has a cat'),
+  ('has a dog'),
+  ('plans to get a pet'),
+  ('no pets please');
+
+-- setting categories for each description 
+UPDATE allUserAttributes SET category = 'year' WHERE name IN ('freshman', 'sophomore', 'junior', 'senior', 'graduate');
+UPDATE allUserAttributes SET category = 'studying' WHERE name IN ('business', 'science', 'public affairs', 'education', 'engineering', 'law','medicine', 'other');
+UPDATE allUserAttributes SET category = 'pets' WHERE name IN ('has a pet', 'no pets please', 'has a dog', 'has a cat', 'plans to get a pet');
+UPDATE allUserAttributes SET category = 'cleanliness' WHERE name IN ('cleanliness obsessed', 'does not mind mess', 'can be a little cluttered');
+UPDATE allUserAttributes SET category = 'social' WHERE name IN ('drinks', 'smokes', 'dry', 'no drinking or smoking tolerated', 'likes to host');
+UPDATE allUserAttributes SET category = 'productivity' WHERE name IN ('early bird', 'night owl', 'needs quiet time to focus');
+UPDATE allUserAttributes SET category = 'spirituality' WHERE name IN ('religious', 'not religious', 'christian', 'muslim', 'jewish', 'polytheist');
+UPDATE allUserAttributes SET category = 'dating' WHERE name IN ('has a partner', 'currently dating', 'single pringle', 'expect overnight guests');
+
+----- 1000 Rows of Users Generated Programatically (refer to datasource.txt)
 INSERT INTO user (username, password, firstName, lastName, description, imageUrl) VALUES ('mtea0', '$2a$10$K8ADzo9kF73cZZcWL1OlL.liMBmQraMU8vP4gFy4MlK.UGUR7Slke', 'Meredith', 'Tea', 'Hi! My name is Meredith. I am 22 and I am looking for a roommate in Payne 482 this Fall. Hit me up!', 'https://randomuser.me/api/portraits/men/20.jpg');
 INSERT INTO user (username, password, firstName, lastName, description, imageUrl) VALUES ('lsauce1', '$2a$10$K8ADzo9kF73cZZcWL1OlL.liMBmQraMU8vP4gFy4MlK.UGUR7Slke', 'Layla', 'Sauce', 'Hi! My name is Layla. I am 24 and I am looking for a roommate in Vandiver 795 this Fall. Hit me up!', 'https://randomuser.me/api/portraits/men/3.jpg');
 INSERT INTO user (username, password, firstName, lastName, description, imageUrl) VALUES ('gwilliams2', '$2a$10$K8ADzo9kF73cZZcWL1OlL.liMBmQraMU8vP4gFy4MlK.UGUR7Slke', 'Gabriel', 'Williams', 'Hi! My name is Gabriel. I am 18 and I am looking for a roommate in Myers 776 this Fall. Hit me up!', 'https://randomuser.me/api/portraits/men/88.jpg');
