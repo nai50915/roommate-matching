@@ -30,7 +30,7 @@ Before compiling and running, ensure you are in the finalproj directory. </br>
 **Database Username**: root </br>
 **Database Password**: mysqlpass </br>
 ### <ins> <code style="color : aqua">Test Username and Password Pairs</code> </ins>
-**Username 01**: mtea0 </br>
+**Username 01**: jzimbabwe838 </br>
 **Password 01**: 1234 </br> </br>
 **Username 02**: lsauce1 </br>
 **Password 02**: 1234 </br> </br>
