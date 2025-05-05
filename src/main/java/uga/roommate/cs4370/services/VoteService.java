@@ -39,7 +39,7 @@ public class VoteService {
     } else if (hasVoted.equals("upvote")) {
       return;
     }
-    String sql = "INSERT INTO vote (userId, postId, type) VALUES (?, ?, 'upvote')";
+    String sql = "INSERT INTO vote (userId, reviewId, type) VALUES (?, ?, 'upvote')";
     try (Connection conn = dataSource.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql)) {
           ps.setString(1, userId);
@@ -66,7 +66,7 @@ public class VoteService {
     } else if (hasVoted.equals("downvote")) {
       return;
     }
-    String sql = "INSERT INTO vote (userId, postId, type) VALUES (?, ?, 'downvote')";
+    String sql = "INSERT INTO vote (userId, reviewId, type) VALUES (?, ?, 'downvote')";
     try (Connection conn = dataSource.getConnection();
          PreparedStatement ps = conn.prepareStatement(sql)) {
           ps.setString(1, userId);

@@ -20,6 +20,8 @@ import uga.roommate.cs4370.models.User;
 import uga.roommate.cs4370.models.ProfileReview;
 import uga.roommate.cs4370.models.Attribute;
 
+import uga.roommate.cs4370.services.VoteService;
+
 /**
  * This is a service class to assist in building the profile page.
  * This class interacts with the database through a dataSource instance.
@@ -27,6 +29,8 @@ import uga.roommate.cs4370.models.Attribute;
 @Service
 public class ProfileService {
     private final DataSource dataSource;
+    private final VoteService voteService;
+
     private static final Map<String, String> TAG_MAP = Map.of(
             "Clean", "Clean",
             "Messy", "Messy",
@@ -39,8 +43,9 @@ public class ProfileService {
             "NP", "No Pets");
 
     @Autowired
-    public ProfileService(DataSource dataSource) {
+    public ProfileService(DataSource dataSource, VoteService voteService) {
         this.dataSource = dataSource;
+        this.voteService = voteService;
     }
 
     /**
@@ -206,9 +211,11 @@ public class ProfileService {
                     String reviewerFirstName = rs.getString("reviewerFirstName");
                     String reviewerImg = rs.getString("reviewerImg");
                     String content = rs.getString("content");
+                    int upvoteCount = voteService.countUpvotes(reviewId);
+                    int downvoteCount = voteService.countDownvotes(reviewId);
 
                     ProfileReview review = new ProfileReview(
-                            reviewId, revieweeFirstName, reviewerFirstName, reviewerImg, content);
+                            reviewId, revieweeFirstName, reviewerFirstName, reviewerImg, content, upvoteCount, downvoteCount);
                     reviews.add(review);
                 }
             }
