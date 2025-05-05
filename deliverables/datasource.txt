@@ -1,1 +1,36 @@
+# datasource.txt
+
+Data Generation Approach
+-------------------------------------------
+
+Unable to find Kaggle datasets, we opted to generate our synthetic data programatically with 2 files 
+for 2 purposes: UserDataGenerator.java to generate 1000 new users to our web application and 
+ReviewDataGenerator.java to generate 300 reviews made by one user to another. 
+
+--------- UserDataGenerator.java ---------
+The user table has these attributes:
+- ** userId: autoincremented in ddl.sql
+- firstName: wrote a String[] of >50 first names and generated different first and last name combos amongst each
+- lastName: wrote a String[] of >50 last names and generated different first and last name combos amongst each
+- password: all have the same bCrypt password, "1234"
+- description: all descriptions follow this format, gave the users extra attributes like age and residence
+"Hi! My name is %s. I am %d and I am looking for a roommate in %s %d this Fall. Hit me up!"
+%s = firstName
+%d = random age between 18 and 24
+%s = residence
+%d = residence number 
+- imageUrl: all imageUrl follow this format, gave the users extra attributes like gender
+" "https://randomuser.me/api/portraits/" + (isMale ? "men/" : "women/") + faceId"
+https://randomuser.me/api/portraits/ = generates different images if given a gender and a number between 1 and 99, so 
+for example https://randomuser.me/api/portraits/men/45.jpg generates an image of a man with a hightop and glasses 
+- faceId = random number from 1 to 99 
+
+The review table has these attributes:
+- reviewerId: since users are autoincremented from 1 to 1000, this is a random number from 1 to 1000
+- revieweeId: random number from 1 to 1000, excluding the id in reviewerId since it doesn't make sense for a person
+to write their own review 
+- content: small set of String[][] templated comments chosen at random, correpsonding with a rating 
+- ratingValue: random integer 1 to 5, each rating has a small set of templated comments
+- ** timestamp: default sql time based on insertion 
+
 

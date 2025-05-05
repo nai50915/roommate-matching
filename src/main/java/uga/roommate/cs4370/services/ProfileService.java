@@ -75,7 +75,6 @@ public class ProfileService {
                     ArrayList<String> tags = getTags(userId);
 
                     User user = new User(userId, username, firstName, lastName, bio, imagePath, tags, attributes);
-                    System.out.println("GETUSER: Successfully created User object: " + username);
                     return user;
                 } else {
                     System.err.println("GETUSER ERROR: No user found with ID: " + userId);
