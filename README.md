@@ -15,7 +15,6 @@ Before compiling and running, ensure you are in the finalproj directory. </br>
 **Shelby Osteen**: Planning, reviews, front-end, profile, voting </br>
 **Hadiza Sarr**: Data generation, planning, user attributes, profile, compiling deliverables </br>
 **Netra Amin**: Database design, planning, (finding) past roommates, compiling deliverables </br>
-</br>
 ### <ins> <code style="color : aqua">Technologies Used</code> </ins>
 **Figma**: To begin designing the web application and map out basic navigation </br>
 **Mustache**: Create dynamic HTML pages for the application </br>
@@ -24,17 +23,10 @@ Before compiling and running, ensure you are in the finalproj directory. </br>
 **Java SpringBoot**: Develop the web application </br>
 **Random User API**: Generate different images for profile pictures </br>
   https://randomuser.me/api/portraits/
-  
-
-
-</br>
-
 ### <ins><code style="color : aqua">Database Information</code> </ins>
 **Database Name**: cs4370_rooommate_platform </br>
 **Database Username**: root </br>
 **Database Password**: mysqlpass </br>
-</br>
-
 ### <ins> <code style="color : aqua">Test Username and Password Pairs</code> </ins>
 **Username 01**: mtea0 </br>
 **Password 01**: 1234 </br> </br>
