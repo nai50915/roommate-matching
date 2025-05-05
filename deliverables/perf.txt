@@ -1,1 +1,2 @@
-
+create index userId_index on user(userId); </br>
+create index reviewId_index on review(reviewId);
