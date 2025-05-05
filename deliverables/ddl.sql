@@ -59,15 +59,6 @@ create table if not exists reviewTag (
     foreign key (reviewId) references review(reviewId) on delete cascade
 ); 
 
--- Create the userAttributes table
-create table if not exists userAttributes (
-	attrId int, 
-	userId int not null, 
-	primary key (userId, attrId), 
-	foreign key (userId) references user(userId) on delete cascade,
-	foreign key (attrId) references allUserAttributes(attrId) on delete cascade
-);
-
 -- create the allUserAttributes table
 create table if not exists allUserAttributes (
     attrId int auto_increment, 
@@ -75,6 +66,15 @@ create table if not exists allUserAttributes (
     category varchar(50), 
     primary key (attrId)
     -- category varchar(50), 
+);
+
+-- Create the userAttributes table
+create table if not exists userAttributes (
+	attrId int, 
+	userId int not null, 
+	primary key (userId, attrId), 
+	foreign key (userId) references user(userId) on delete cascade,
+	foreign key (attrId) references allUserAttributes(attrId) on delete cascade
 );
 
 -- Create the match table
