@@ -1,14 +1,14 @@
-    <div class = "match">
-        <div class="match_profile_pic">
-            <img class="match_profile_pic" src="{{imagePath}} alt="Profile Picture" />
-        </div>
-        <div class ="match_desc">
-            <div class="match_name">{{username}} </div>
-            <div class="match_tags">
-                {{#tags}}
-                    <span class="tag">{{.}}</span>
-                {{/tags}}
-            </div>
-        </div>
-        <div class="match_percent">{{percentageMatch}}%</div>
+<div class="match">
+    <div class="match_profile_pic">
+        <img class="match_profile_pic" src="{{imagePath}}" alt="Profile Picture" />
     </div>
+    <div class="match_desc">
+        <div class="match_name">{{username}} </div>
+        <div class="match_tags">
+            {{#tags}}
+                <span class="tag">{{.}}</span>
+            {{/tags}}
+        </div>
+    </div>
+    <div class="match_percent">{{percentageMatch}}%</div>
+</div>

@@ -14,7 +14,7 @@ public class MatchedUser extends User {
             List<String> tags, List<Attribute> attrs, boolean isMatched, double percentageMatch) {
         super(userId, username, firstName, lastName, bio, imagePath, tags, attrs);
         this.isMatched = isMatched;
-        this.percentageMatch = percentageMatch;
+        this.percentageMatch = Math.round(percentageMatch * 100) / 100.0;
     }
 
     public String getFormattedPercentage() {
